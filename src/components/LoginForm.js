@@ -17,7 +17,6 @@ class Form extends Component {
   }
 
   onSubmit(e) {
-    console.log('123');
     e.preventDefault();
 
     const userAuth = {
@@ -35,12 +34,12 @@ class Form extends Component {
       .then(res => res.json())
       .then(token => {
         this.setState({ token : token})
-        console.log(token);
-        console.log(this.state.token);
+        sessionStorage.setItem('token', token.password)
       })
   }
 
   render() {
+    const token = this.state.token.password;
     return (
       <div className="App">
         <form onSubmit={this.onSubmit}>
@@ -51,6 +50,7 @@ class Form extends Component {
           <br />
           <br />
           <button type="submit">Submit</button>
+          <p>{token}</p>
         </form>
       </div>
     );

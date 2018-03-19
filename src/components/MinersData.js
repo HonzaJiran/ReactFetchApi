@@ -8,7 +8,7 @@ class Miners extends Component {
       miners: []
     };
   }
-  componentWillMount(){
+  componentDidMount(){
     fetch('https://jsonplaceholder.typicode.com/posts')
     .then(res => res.json())
     .then(data => {
