@@ -43,7 +43,7 @@ class Miners extends Component {
                   return(
                     <div key={performance.coin.id} className="coin_info">
                       <h5>{performance.coin.shortcut}</h5>
-                      <p><b>Hashrate: </b>{performance.total_hashrate}</p>
+                      <p><b>Total hashrate: </b>{performance.total_hashrate}</p>
                       <p><b>Invalid shares: </b>{performance.total_invalid_shares}</p>
                       <p><b>Rejected shares: </b>{performance.total_rejected_shares}</p>
                       <p><b>Total shares: </b>{performance.total_shares}</p>
