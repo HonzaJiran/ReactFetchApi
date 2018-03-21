@@ -6,6 +6,13 @@ import Form from './components/LoginForm';
 import Miners from './components/MinersData'
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      jwtToken: {}
+    }
+  }
+
   render() {
     return (
       <div className="App">
@@ -15,7 +22,7 @@ class App extends Component {
         </header>
         <Form />
         <hr />
-        <Miners />
+        { this.state.jwtToken !== {} && <Miners /> }
       </div>
     );
   }

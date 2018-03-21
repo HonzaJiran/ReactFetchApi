@@ -5,8 +5,7 @@ class Form extends Component {
     super(props);
     this.state = {
       username: '',
-      password: '',
-      token: {}
+      password: ''
     }
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -17,6 +16,7 @@ class Form extends Component {
   }
 
   onSubmit(e) {
+    console.log('123');
     e.preventDefault();
 
     const userAuth = {
@@ -33,14 +33,12 @@ class Form extends Component {
     })
       .then(res => res.json())
       .then(token => {
-        this.setState({ token : token})
-        sessionStorage.setItem('token', token.password)
+        sessionStorage.setItem('jwtToken', token.id);
       })
   }
 
   render() {
-    const token = this.state.token.password;
-    return (
+    return (      
       <div className="App">
         <form onSubmit={this.onSubmit}>
           <p>Username</p>
@@ -50,7 +48,6 @@ class Form extends Component {
           <br />
           <br />
           <button type="submit">Submit</button>
-          <p>{token}</p>
         </form>
       </div>
     );

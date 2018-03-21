@@ -8,15 +8,24 @@ class Miners extends Component {
       miners: []
     };
   }
-  componentDidMount(){
-    fetch('https://jsonplaceholder.typicode.com/posts')
+
+  componentWillMount(){
+    const jwtToken = sessionStorage.getItem('jwtToken');
+    
+    fetch('http://192.168.0.199:7000/api/v1/miner/', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'JWT ' + jwtToken
+      }
+    })
     .then(res => res.json())
-    .then(data => {
-      this.setState({ miners : data})
-    });
+    .then(miners => {
+      console.log(miners);
+    })
   }
   render() {
-    const postMiners = this.state.miners.map(miner => {
+    const miners = this.state.miners.map(miner => {
       return (
         <div key={miner.id}>
           <h4>{miner.title}</h4>
@@ -26,7 +35,7 @@ class Miners extends Component {
     })
     return (
       <div className="minersList">
-        { postMiners }
+        { miners }
       </div>
     );
   }
