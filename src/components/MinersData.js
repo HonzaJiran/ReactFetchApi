@@ -9,27 +9,21 @@ class Miners extends Component {
     };
   }
 
-  componentWillMount(){
-    const jwtToken = sessionStorage.getItem('jwtToken');
+  componentDidMount(){
+    //const jwtToken = sessionStorage.getItem('jwtToken');
     
-    fetch('http://192.168.0.199:7000/api/v1/miner/', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'JWT ' + jwtToken
-      }
-    })
+    fetch('https://jsonplaceholder.typicode.com/posts')
     .then(res => res.json())
     .then(miners => {
-      console.log(miners);
+      this.setState({miners:miners})
     })
   }
   render() {
     const miners = this.state.miners.map(miner => {
       return (
         <div key={miner.id}>
-          <h4>{miner.title}</h4>
-          <h5>{miner.body}</h5>
+          <h5>{miner.title}</h5>
+          <p>{miner.body}</p>
         </div>
       );
     })

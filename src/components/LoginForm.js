@@ -39,17 +39,19 @@ class Form extends Component {
 
   render() {
     return (      
-      <div className="App">
-        <form onSubmit={this.onSubmit}>
-          <p>Username</p>
-          <input type="text" name="username" onChange={this.onChange} value={this.state.username} />
-          <p>Password</p>
-          <input type="password" name="password" onChange={this.onChange} value={this.state.password} />
-          <br />
-          <br />
-          <button type="submit">Submit</button>
-        </form>
-      </div>
+      <form className="col 12" onSubmit={this.onSubmit}>
+        <div className="row">
+          <div className="input field col s6">
+            <input type="text" className="validate" name="username" onChange={this.onChange} value={this.state.username} />
+            <label htmlFor="username">Username</label>
+          </div>
+          <div className="input field col s6">
+          <input type="password" className="validate" name="password" onChange={this.onChange} value={this.state.password} />
+          <label htmlFor="password">Password</label>
+          </div>
+          <button className="btn is-primary" type="submit">Submit</button>
+        </div>
+      </form>
     );
   }
 }

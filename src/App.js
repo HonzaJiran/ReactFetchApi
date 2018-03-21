@@ -8,13 +8,14 @@ import Miners from './components/MinersData'
 class App extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      show_data: false
+    }
+    this.handleMiners = this.handleMiners.bind(this);
   }
   
   handleMiners(){
-    console.log('Getting Data...');
-    return(
-      <Miners />
-    );
+    this.setState({show_data:true})
   }
 
   render() {
@@ -22,11 +23,16 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Lets fetch it</h1>
         </header>
-        <Form />
-        <hr />
-        <button onClick={this.handleMiners}>Get data</button>
+        <div className="container">
+          <br />
+          <br />
+          <Form />
+          <br />
+          <hr />
+          <button className="btn is-warning" onClick={this.handleMiners}>Get data</button>
+          {this.state.show_data && <Miners />}
+        </div>
       </div>
     );
   }
