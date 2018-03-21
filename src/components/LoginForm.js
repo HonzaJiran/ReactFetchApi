@@ -24,7 +24,7 @@ class Form extends Component {
       password: this.state.password
     }
 
-    fetch('https://jsonplaceholder.typicode.com/posts', {
+    fetch('http://192.168.0.199:7000/api-auth/', {
       method: 'POST',
       headers: {
         'Content-Type':'application/json'
@@ -33,7 +33,8 @@ class Form extends Component {
     })
       .then(res => res.json())
       .then(token => {
-        sessionStorage.setItem('jwtToken', token.id);
+        sessionStorage.setItem('jwtToken', token.token);
+        console.log(token);
       })
   }
 

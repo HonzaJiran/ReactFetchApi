@@ -30,7 +30,9 @@ class App extends Component {
           <Form />
           <br />
           <hr />
-          <button className="btn is-warning" onClick={this.handleMiners}>Get data</button>
+          <button className="btn is-warning" onClick={this.handleMiners}>Miner status</button>
+          <br />
+          <br />
           {this.state.show_data && <Miners />}
         </div>
       </div>
