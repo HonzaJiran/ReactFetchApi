@@ -8,9 +8,13 @@ import Miners from './components/MinersData'
 class App extends Component {
   constructor(props){
     super(props);
-    this.state = {
-      jwtToken: {}
-    }
+  }
+  
+  handleMiners(){
+    console.log('Getting Data...');
+    return(
+      <Miners />
+    );
   }
 
   render() {
@@ -22,7 +26,7 @@ class App extends Component {
         </header>
         <Form />
         <hr />
-        { this.state.jwtToken !== {} && <Miners /> }
+        <button onClick={this.handleMiners}>Get data</button>
       </div>
     );
   }
