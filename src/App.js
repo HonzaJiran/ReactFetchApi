@@ -19,10 +19,12 @@ class App extends Component {
   
   handleMiners(){
     this.setState({show_miners:true})
+    this.setState({show_graphic_cards:false})
   }
   
   handleGraphicCards(){
     this.setState({show_graphic_cards:true})
+    this.setState({show_miners:true})
   }
 
   render() {
