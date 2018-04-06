@@ -11,7 +11,7 @@ class App extends Component {
     super(props);
     this.state = {
       show_miners: false,
-      show_graphic_cards: false
+      show_cards: false
     }
     this.handleMiners = this.handleMiners.bind(this);
     this.handleGraphicCards = this.handleGraphicCards.bind(this);
@@ -36,13 +36,12 @@ class App extends Component {
           <br />
           <Form />
           <br />
-          <hr />
           <button className="btn is-primary" onClick={this.handleMiners}>Miner status</button>
           <button className="btn is-primary" onClick={this.handleGraphicCards}>Graphic cards status</button>
           <br />
           <br />
           {this.state.show_miners && <Miners />}
-          {this.state.show_graphic_cards && <GraphicCards />}
+          {this.state.show_cards && <GraphicCards />}
         </div>
       </div>
     );

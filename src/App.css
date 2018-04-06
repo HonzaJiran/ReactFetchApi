@@ -33,3 +33,23 @@ i.icon-green {
 i.icon-red {
     color: red;
 }
+
+.panel-heading {
+  background-color: #000;
+  margin: 5px;
+  padding-top: 5px;
+}
+
+.mb-0 > p {
+  margin: 0;
+  padding: 0;
+  display: inline;
+  margin: 10px;
+}
+
+.mb-0 > .btn {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  float: right;
+}

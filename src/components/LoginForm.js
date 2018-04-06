@@ -25,7 +25,7 @@ class Form extends Component {
       password: this.state.password
     }
 
-    fetch('http://192.168.0.199:7000/api-auth/', {
+    fetch('http://monpick.thinkeasy.cz:7000/api-auth/', {
       method: 'POST',
       headers: {
         'Content-Type':'application/json'
@@ -45,18 +45,16 @@ class Form extends Component {
     return (
       <div className="form">
         { this.state.show_input &&      
-          <form className="col 12" onSubmit={this.onSubmit}>
-            <div className="row">
-              <div className="input field col s6">
-                <input type="text" className="validate" name="username" onChange={this.onChange} value={this.state.username} />
-                <label htmlFor="username">Username</label>
-              </div>
-              <div className="input field col s6">
-              <input type="password" className="validate" name="password" onChange={this.onChange} value={this.state.password} />
-              <label htmlFor="password">Password</label>
-              </div>
-              <button className="btn is-primary" type="submit">Submit</button>
+          <form onSubmit={this.onSubmit}>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Username</label>
+              <input name="username" type="text" onChange={this.onChange} value={this.state.username} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
             </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password</label>
+              <input name="password" type="password" onChange={this.onChange} value={this.state.password} class="form-control" id="exampleInputPassword1" placeholder="Password" />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
           </form>
         }
       </div>

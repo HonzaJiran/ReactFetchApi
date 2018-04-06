@@ -11,8 +11,8 @@ class Miners extends Component {
 
   componentDidMount(){
     const jwtToken = sessionStorage.getItem('jwtToken');
-    
-    fetch('http://192.168.0.199:7000/api/v1/status/miners', {
+
+    fetch('http://monpick.thinkeasy.cz:7000/api/v1/status/miners', {
       method: 'get',
       headers: {
         'Content-Type': 'application/json',
@@ -25,42 +25,49 @@ class Miners extends Component {
       console.log(this.state.miners)
     })
   }
+
   render() {
     const miners = this.state.miners.map(miner => {
       //console.log(miner.miner_performance[0].coin.shortcut);
       return (
-        <div key={miner.id} className="col s12 m12 l6">
-          <div className="card">
-            <div className="card-title">
-            <br />
-            <h5>{miner.is_active === true ? <i className="medium material-icons icon-green">check</i> : <i className="medium material-icons icon-red">close</i>}</h5><h5>{miner.miner.ip_address}</h5>
-            </div>
-            <div className="card-content">
-              <p>{miner.miner.version}</p>
-              <br/>
-              {
-                miner.miner_performance.map(performance => {
-                  return(
-                    <div key={performance.coin.id} className="coin_info">
-                      <h5>{performance.coin.shortcut}</h5>
-                      <p><b>Total hashrate: </b>{performance.total_hashrate}</p>
-                      <p><b>Invalid shares: </b>{performance.total_invalid_shares}</p>
-                      <p><b>Rejected shares: </b>{performance.total_rejected_shares}</p>
-                      <p><b>Total shares: </b>{performance.total_shares}</p>
-                    </div>
-                  );
-                })
-              }
-            </div>
-            <div className="card-action">
-              
+        <div key={miner.id}>
+          <div id="accordion">
+            <div class="card">
+              <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                  <p>{miner.is_active === true ? <i className="medium material-icons icon-green">check</i> : <i className="medium material-icons icon-red">close</i>}</p>
+                  <p>{miner.miner.ip_address}</p>
+                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{miner.id}" aria-expanded="false" aria-controls="collapse{miner.id}">
+                    <i className="medium material-icons">arrow_downward</i>
+                  </button>
+                </h5>
+              </div>
+
+              <div id="collapse{miner.id}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                  <p>{miner.miner.version}</p>
+                  {
+                    miner.miner_performance.map(performance => {
+                      return(
+                        <div key={performance.coin.id} className="coin_info">
+                          <h5>{performance.coin.shortcut}</h5>
+                          <p><b>Total hashrate: </b>{performance.total_hashrate}</p>
+                          <p><b>Invalid shares: </b>{performance.total_invalid_shares}</p>
+                          <p><b>Rejected shares: </b>{performance.total_rejected_shares}</p>
+                          <p><b>Total shares: </b>{performance.total_shares}</p>
+                        </div>
+                      );
+                    })
+                  }
+                </div>
+              </div>
             </div>
           </div>
         </div>
       );
     })
     return (
-      <div className="row">
+      <div className="miners">
         { miners }
       </div>
     );

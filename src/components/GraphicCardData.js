@@ -12,7 +12,7 @@ class GraphicCards extends Component {
   componentDidMount(){
     const jwtToken = sessionStorage.getItem('jwtToken');
 
-    fetch('http://192.168.0.199:7000/api/v1/status/graphiccards', {
+    fetch('http://monpick.thinkeasy.cz:7000/api/v1/status/graphiccards', {
       method: 'get',
       headers: {
         'Content-Type': 'application/json',
