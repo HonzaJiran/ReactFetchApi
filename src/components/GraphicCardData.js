@@ -29,31 +29,36 @@ class GraphicCards extends Component {
     const graphicCards = this.state.graphicCards.map(graphicCard => {
       //console.log(graphicCard.graphicCard_performance[0].coin.shortcut);
       return (
-        <div key={graphicCard.id} className="col s12 m12 l6">
-          <div className="card">
-            <div className="card-title">
-            <br />
-            <h5>{graphicCard.is_active === true ? <i className="medium material-icons icon-green">check</i> : <i className="medium material-icons icon-red">close</i>}</h5><h5>{graphicCard.temperature}°C</h5>
-            </div>
-            <div className="card-content">
-              <p>{graphicCard.fan_speed} RPM</p>
-              <br/>
-              {
-                graphicCard.gpu_performance.map(performance => {
-                  return(
-                    <div key={performance.coin.id} className="GraphicCard_coin_info">
-                      <h5>{performance.coin.shortcut}</h5>
-                      <p><b>Hashrate: </b>{performance.hashrate}</p>
-                      <p><b>Invalid shares: </b>{performance.total_invalid_shares}</p>
-                      <p><b>Rejected shares: </b>{performance.total_rejected_shares}</p>
-                      <p><b>Shares: </b>{performance.shares}</p>
-                    </div>
-                  );
-                })
-              }
-            </div>
-            <div className="card-action">
+        <div className="tableCell" key={graphicCard.id}>
+          <div id="accordion">
+            <div className="card">
+              <div className="card-header" id="headingOne">
+                <h5 className="mb-0">
+                  <p>{graphicCard.is_active === true ? <i className="medium material-icons icon-green">check</i> : <i className="medium material-icons icon-red">close</i>}</p><p>{graphicCard.graphic_card.id}</p>
+                  <p>{graphicCard.temperature}C</p>
+                  <button className="btn btn-link" data-toggle="collapse" data-target={ "#collapse" + graphicCard.id} aria-expanded="false" aria-controls={ "collapse" + graphicCard.id}>
+                    <i className="medium material-icons">arrow_downward</i>
+                  </button>
+                </h5>
+              </div>
 
+              <div id={ "collapse" + graphicCard.id} className="collapse hide" aria-labelledby="headingOne" data-parent="#accordion">
+                <div className="card-body">
+                    {
+                      graphicCard.gpu_performance.map(performance => {
+                        return(
+                          <div key={performance.coin.id} className="GraphicCard_coin_info">
+                            <h5>{performance.coin.shortcut}</h5>
+                            <p><b>Hashrate: </b>{performance.hashrate}</p>
+                            <p><b>Invalid shares: </b>{performance.invalid_shares}</p>
+                            <p><b>Rejected shares: </b>{performance.rejected_shares}</p>
+                            <p><b>Shares: </b>{performance.shares}</p>
+                          </div>
+                        );
+                      })
+                    }
+                </div>
+              </div>
             </div>
           </div>
         </div>

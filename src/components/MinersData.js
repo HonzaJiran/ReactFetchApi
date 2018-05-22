@@ -30,21 +30,21 @@ class Miners extends Component {
     const miners = this.state.miners.map(miner => {
       //console.log(miner.miner_performance[0].coin.shortcut);
       return (
-        <div key={miner.id}>
+        <div className="tableCell" key={miner.id}>
           <div id="accordion">
-            <div class="card">
-              <div class="card-header" id="headingOne">
-                <h5 class="mb-0">
+            <div className="card">
+              <div className="card-header" id="headingOne">
+                <h5 className="mb-0">
                   <p>{miner.is_active === true ? <i className="medium material-icons icon-green">check</i> : <i className="medium material-icons icon-red">close</i>}</p>
                   <p>{miner.miner.ip_address}</p>
-                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{miner.id}" aria-expanded="false" aria-controls="collapse{miner.id}">
+                  <button className="btn btn-link" data-toggle="collapse" data-target={ "#collapse" + miner.id} aria-expanded="false" aria-controls={ "collapse" + miner.id}>
                     <i className="medium material-icons">arrow_downward</i>
                   </button>
                 </h5>
               </div>
 
-              <div id="collapse{miner.id}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                <div class="card-body">
+              <div id={ "collapse" + miner.id} className="collapse hide" aria-labelledby="headingOne" data-parent="#accordion">
+                <div className="card-body">
                   <p>{miner.miner.version}</p>
                   {
                     miner.miner_performance.map(performance => {
