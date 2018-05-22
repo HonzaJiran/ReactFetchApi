@@ -10,6 +10,8 @@ class GraphicCards extends Component {
   }
 
   componentDidMount(){
+
+
     const jwtToken = sessionStorage.getItem('jwtToken');
 
     fetch('http://monpick.thinkeasy.cz:7000/api/v1/status/graphiccards', {
@@ -22,12 +24,10 @@ class GraphicCards extends Component {
     .then(res => res.json())
     .then(graphicCards => {
       this.setState({graphicCards:graphicCards})
-      console.log(this.state.graphicCards)
     })
   }
   render() {
     const graphicCards = this.state.graphicCards.map(graphicCard => {
-      //console.log(graphicCard.graphicCard_performance[0].coin.shortcut);
       return (
         <div className="tableCell" key={graphicCard.id}>
           <div id="accordion">

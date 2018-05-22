@@ -18,7 +18,6 @@ class Form extends Component {
   }
 
   onSubmit(e) {
-    console.log('123');
     e.preventDefault();
       const userAuth = {
         username: this.state.username,
@@ -39,13 +38,13 @@ class Form extends Component {
             return res.json()
             .then(token => {
               sessionStorage.setItem('jwtToken', token.token);
-              console.log(token);
+              sessionStorage.setItem('username', this.state.username);
+              sessionStorage.setItem('password', this.state.password);
               window.location.reload()
             })
           }
 
         })
-
   }
 
   render() {
@@ -66,7 +65,7 @@ class Form extends Component {
                 <label htmlFor="exampleInputPassword1">Password</label>
                 <input name="password" type="password" onChange={this.onChange} value={this.state.password} className="form-control" id="exampleInputPassword1" placeholder="Password" required />
               </div>
-              <button type="submit" className="btn btn-primary">Submit</button>
+              <button type="submit" className="btn btn-primary">Login</button>
             </form>
             }
         </div>

@@ -10,6 +10,7 @@ class Miners extends Component {
   }
 
   componentDidMount(){
+
     const jwtToken = sessionStorage.getItem('jwtToken');
 
     fetch('http://monpick.thinkeasy.cz:7000/api/v1/status/miners', {
@@ -22,13 +23,11 @@ class Miners extends Component {
     .then(res => res.json())
     .then(miners => {
       this.setState({miners:miners})
-      console.log(this.state.miners)
     })
   }
 
   render() {
     const miners = this.state.miners.map(miner => {
-      //console.log(miner.miner_performance[0].coin.shortcut);
       return (
         <div className="tableCell" key={miner.id}>
           <div id="accordion">
@@ -37,7 +36,7 @@ class Miners extends Component {
                 <h5 className="mb-0">
                   <p>{miner.is_active === true ? <i className="medium material-icons icon-green">check</i> : <i className="medium material-icons icon-red">close</i>}</p>
                   <p>{miner.miner.ip_address}</p>
-                  <button className="btn btn-link" data-toggle="collapse" data-target={ "#collapse" + miner.id} aria-expanded="false" aria-controls={ "collapse" + miner.id}>
+                  <button className="btn btn-link" data-toggle="collapse" data-target={ "#collapse" + miner.id } aria-expanded="false" aria-controls={ "collapse" + miner.id}>
                     <i className="medium material-icons">arrow_downward</i>
                   </button>
                 </h5>
