@@ -5,12 +5,44 @@ class GraphicCards extends Component {
   constructor(props){
     super(props);
     this.state = {
-      graphicCards: []
+      graphicCards: [],
+      showAll: 'hide'
     };
+    this.showAll = this.showAll.bind(this);
+  }
+
+  showAll(){
+    if (this.state.showAll === 'hide') {
+      this.setState({ showAll: 'show' })
+    }else {
+      this.setState({ showAll: 'hide' })
+    }
   }
 
   componentDidMount(){
 
+    const userAuth = {
+      username: sessionStorage.getItem('username'),
+      password: sessionStorage.getItem('password')
+    }
+
+    fetch('http://monpick.thinkeasy.cz:7000/api-auth/', {
+      method: 'POST',
+      headers: {
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify(userAuth)
+    })
+      .then(res => {
+        if (!res.ok) {
+          this.setState({ show_error: true })
+        }else {
+          return res.json()
+          .then(token => {
+            sessionStorage.setItem('jwtToken', token.token);
+          })
+        }
+      })
 
     const jwtToken = sessionStorage.getItem('jwtToken');
 
@@ -42,7 +74,7 @@ class GraphicCards extends Component {
                 </h5>
               </div>
 
-              <div id={ "collapse" + graphicCard.id} className="collapse hide" aria-labelledby="headingOne" data-parent="#accordion">
+              <div id={ "collapse" + graphicCard.id} className={"collapse " + this.state.showAll} aria-labelledby="headingOne" data-parent="#accordion">
                 <div className="card-body">
                     {
                       graphicCard.gpu_performance.map(performance => {
@@ -66,6 +98,7 @@ class GraphicCards extends Component {
     })
     return (
       <div className="row">
+        <button className="btn btn-warning" type="button" onClick={this.showAll}>Show all</button>
         { graphicCards }
       </div>
     );

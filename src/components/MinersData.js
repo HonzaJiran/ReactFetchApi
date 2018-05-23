@@ -5,11 +5,44 @@ class Miners extends Component {
   constructor(props){
     super(props);
     this.state = {
-      miners: []
+      miners: [],
+      showAll: 'hide'
     };
+    this.showAll = this.showAll.bind(this);
+  }
+
+  showAll(){
+    if (this.state.showAll === 'hide') {
+      this.setState({ showAll: 'show' })
+    }else {
+      this.setState({ showAll: 'hide' })
+    }
   }
 
   componentDidMount(){
+
+    const userAuth = {
+      username: sessionStorage.getItem('username'),
+      password: sessionStorage.getItem('password')
+    }
+
+    fetch('http://monpick.thinkeasy.cz:7000/api-auth/', {
+      method: 'POST',
+      headers: {
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify(userAuth)
+    })
+      .then(res => {
+        if (!res.ok) {
+          this.setState({ show_error: true })
+        }else {
+          return res.json()
+          .then(token => {
+            sessionStorage.setItem('jwtToken', token.token);
+          })
+        }
+      })
 
     const jwtToken = sessionStorage.getItem('jwtToken');
 
@@ -42,7 +75,7 @@ class Miners extends Component {
                 </h5>
               </div>
 
-              <div id={ "collapse" + miner.id} className="collapse hide" aria-labelledby="headingOne" data-parent="#accordion">
+              <div id={ "collapse" + miner.id} className={"collapse " + this.state.showAll} aria-labelledby="headingOne" data-parent="#accordion">
                 <div className="card-body">
                   <p>{miner.miner.version}</p>
                   {
@@ -66,7 +99,8 @@ class Miners extends Component {
       );
     })
     return (
-      <div className="miners">
+      <div className="row">
+         <button className="btn btn-warning" type="button" onClick={this.showAll}>Show all</button>
         { miners }
       </div>
     );
