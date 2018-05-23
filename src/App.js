@@ -39,32 +39,30 @@ class App extends Component {
     window.location.reload()
   }
 
-  renewToken(){
-      const userAuth = {
-        username: sessionStorage.getItem('username'),
-        password: sessionStorage.getItem('password')
-      }
-
-      fetch('http://monpick.thinkeasy.cz:7000/api-auth/', {
-        method: 'POST',
-        headers: {
-          'Content-Type':'application/json'
-        },
-        body: JSON.stringify(userAuth)
-      })
-        .then(res => {
-          if (!res.ok) {
-            this.setState({ show_error: true })
-          }else {
-            return res.json()
-            .then(token => {
-              sessionStorage.setItem('jwtToken', token.token);
-            })
-          }
-        })
-  }
-
   componentDidMount(){
+    const userAuth = {
+      username: sessionStorage.getItem('username'),
+      password: sessionStorage.getItem('password')
+    }
+
+    fetch('http://monpick.thinkeasy.cz:7000/api-auth/', {
+      method: 'POST',
+      headers: {
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify(userAuth)
+    })
+      .then(res => {
+        if (!res.ok) {
+          this.setState({ show_error: true })
+        }else {
+          return res.json()
+          .then(token => {
+            sessionStorage.setItem('jwtToken', token.token);
+          })
+        }
+      })
+
     const jwtToken = sessionStorage.getItem('jwtToken');
 
     fetch('http://monpick.thinkeasy.cz:7000/api/v1/status/miners', {
@@ -85,11 +83,6 @@ class App extends Component {
         this.setState({ show_form: true })
       }
     })
-
-    this.tokenTiming = setInterval(
-      () => this.renewToken(),
-      240000
-    );
   }
 
   render() {
