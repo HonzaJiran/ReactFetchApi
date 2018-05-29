@@ -63,3 +63,15 @@ i.icon-red {
   width: 100%;
   margin-bottom: 5px;
 }
+
+.collector {
+  width: 45%;
+  margin: 10px auto;
+}
+
+@media screen and (max-width: 800px){
+  .collector{
+    width: 100%;
+    margin: 10px;
+  }
+}

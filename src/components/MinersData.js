@@ -20,7 +20,6 @@ class Miners extends Component {
   }
 
   componentDidMount(){
-
     const userAuth = {
       username: sessionStorage.getItem('username'),
       password: sessionStorage.getItem('password')
@@ -56,6 +55,7 @@ class Miners extends Component {
     .then(res => res.json())
     .then(miners => {
       this.setState({miners:miners})
+      console.log(miners);////////////////////////////////
     })
   }
 

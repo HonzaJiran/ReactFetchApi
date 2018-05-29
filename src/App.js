@@ -5,6 +5,9 @@ import './App.css';
 import Form from './components/LoginForm';
 import Miners from './components/MinersData';
 import GraphicCards from './components/GraphicCardData';
+import Navbar from './components/Navbar';
+import Collectors from './components/Collectors';
+import AddMiner from './components/adding/AddMiner';
 
 class App extends Component {
   constructor(props){
@@ -12,8 +15,10 @@ class App extends Component {
     this.state = {
       show_miners: false,
       show_cards: false,
+      show_collectors: false,
       show_form: false,
       show_buttons: false,
+      show_addMiner: false,
       logout: false,
       logged: false,
       miners: []
@@ -21,15 +26,26 @@ class App extends Component {
     }
     this.handleMiners = this.handleMiners.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleAddMiner = this.handleAddMiner.bind(this);
+    this.handleCollectors = this.handleCollectors.bind(this);
     this.handleGraphicCards = this.handleGraphicCards.bind(this);
   }
 
+  //PREVIOUS STATE
   handleMiners(){
-    this.setState({show_cards: false, show_miners: true})
+    this.setState({ show_cards: false, show_miners: true, show_collectors: false, show_addMiner: false })
   }
 
   handleGraphicCards(){
-    this.setState({show_miners: false, show_cards: true})
+    this.setState({ show_miners: false, show_cards: true, show_collectors: false, show_addMiner: false })
+  }
+
+  handleCollectors(){
+    this.setState({ show_miners: false, show_cards: false, show_collectors: true, show_addMiner: false })
+  }
+
+  handleAddMiner(){
+    this.setState({ show_miners: false, show_cards: false, show_collectors: false, show_addMiner: true })
   }
 
   handleLogout(){
@@ -37,6 +53,10 @@ class App extends Component {
     sessionStorage.removeItem('username')
     sessionStorage.removeItem('password')
     window.location.reload()
+  }
+
+  addMiner(){
+
   }
 
   componentDidMount(){
@@ -88,6 +108,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <Navbar
+          handleMiners={this.handleMiners}
+          handleGraphicCards={this.handleGraphicCards}
+          handleCollectors={this.handleCollectors}
+          handleLogout={this.handleLogout}
+          handleAddMiner={this.handleAddMiner}
+        />
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
         </header>
@@ -104,17 +131,11 @@ class App extends Component {
           }
           { this.state.show_form && <Form /> }
           <br />
-          {this.state.show_buttons &&
-            <div className="buttons">
-              <button className="btn btn-primary" onClick={this.handleMiners}>Miner status</button>
-              <button className="btn btn-primary" onClick={this.handleGraphicCards}>Graphic cards status</button>
-              <button className="btn btn-danger" onClick={this.handleLogout}>Logout</button>
-            </div>
-          }
-          <br />
-          <br />
           { this.state.show_miners && <Miners /> }
           { this.state.show_cards && <GraphicCards /> }
+          { this.state.show_collectors && <Collectors /> }
+          { this.state.show_addMiner && <AddMiner /> }
+
         </div>
       </div>
     );
