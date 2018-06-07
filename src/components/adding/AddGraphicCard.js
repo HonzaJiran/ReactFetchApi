@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class addMiner extends Component {
+class AddGraphicCard extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -9,11 +9,11 @@ class addMiner extends Component {
       mining_password: '',
       collector: '',
       is_disabled: true,
-      collectors: [] //--props
+      collectors: []
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    // this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   componentDidMount(){
@@ -57,7 +57,6 @@ class addMiner extends Component {
 
   onChange(e) {
       this.setState({[e.target.name]: e.target.value});
-      console.log(this.state.collector);
   }
 
   onSubmit(e){
@@ -67,7 +66,7 @@ class addMiner extends Component {
       ip_address: this.state.ip_address,
       mining_password: this.state.mining_password,
       collector: this.state.collector,
-      is_disabled: this.state.is_disabled
+      is_disabled: true
     }
 
     const jwtToken = sessionStorage.getItem('jwtToken');
@@ -82,43 +81,26 @@ class addMiner extends Component {
     })
       .then(res => {
         if (!res.ok) {
-          console.log('Something went wrong..');
+          console.log('nepovedlo se');
         }else {
           return res.json()
           .then(token => {
-            console.log('Miner added');
-            window.location.reload()
+            console.log('jak nic');
           })
         }
       })
   }
 
-  disable(e){
-    if (e.target.textContent === 'Disabled') {
-      this.setState({ is_disabled: true })
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
 
-    }else if (e.target.textContent === 'Enabled') {
-      this.setState({ is_disabled: false })
-    }
-
+    this.setState({
+      [name]: value
+    });
+    console.log(this.state.is_disabled);
   }
-
-  // handleInputChange(event) {
-  //   const target = event.target;
-  //   const value = target.type === 'checkbox' ? target.checked : target.value;
-  //   const name = target.name;
-  //
-  //   this.setState({
-  //     [name]: value
-  //   });
-  //   console.log(this.state.is_disabled);
-  // }
-  // <input
-  //   name="is_disabled"
-  //   type="checkbox"
-  //   defaultChecked={this.state.is_disabled}
-  //   checked={this.state.isGoing}
-  //   onChange={this.handleInputChange} />
 
   render() {
     return (
@@ -139,9 +121,19 @@ class addMiner extends Component {
           <div className="form-group">
             <label htmlFor="selectCollector">Collector name</label>
             <br/>
-            
+            <select name="collector" value={this.state.collector} onChange={this.onChange}>
+              {this.state.collectors.map(collector => {
+                return <option key={collector.id} value={collector.id}>{collector.name}</option>
+              })}
+            </select>
             <br/><br/>
-            <button onClick={this.disable} className="btn btn-danger">Disabled</button>
+            <label htmlFor="is_disabled">Is disabled:</label>
+            <input
+              name="is_disabled"
+              type="checkbox"
+              defaultChecked={this.state.is_disabled}
+              checked={this.state.isGoing}
+              onChange={this.handleInputChange} />
           </div>
           <button type="submit" className="btn btn-success">Submit</button>
         </form>
@@ -151,4 +143,4 @@ class addMiner extends Component {
 }
 
 
-export default addMiner;
+export default AddGraphicCard;

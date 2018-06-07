@@ -69,9 +69,24 @@ i.icon-red {
   margin: 10px auto;
 }
 
+.events-card{
+  width: 32%;
+  margin: 10px auto;
+}
+
+
 @media screen and (max-width: 800px){
   .collector{
     width: 100%;
     margin: 10px;
   }
+  .events-card{
+    width: 100%;
+    margin: 10px;
+  }
+}
+
+.spans {
+  margin: 0;
+   
 }

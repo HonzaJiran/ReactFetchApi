@@ -57,8 +57,10 @@ class GraphicCards extends Component {
     .then(graphicCards => {
       this.setState({graphicCards:graphicCards})
     })
+
   }
   render() {
+    console.log(this.state.graphicCards);
     const graphicCards = this.state.graphicCards.map(graphicCard => {
       return (
         <div className="tableCell" key={graphicCard.id}>
@@ -67,7 +69,7 @@ class GraphicCards extends Component {
               <div className="card-header" id="headingOne">
                 <h5 className="mb-0">
                   <p>{graphicCard.is_active === true ? <i className="medium material-icons icon-green">check</i> : <i className="medium material-icons icon-red">close</i>}</p><p>{graphicCard.graphic_card.id}</p>
-                  <p>{graphicCard.temperature}C</p>
+                  <p>{graphicCard.graphic_card.name}</p>
                   <button className="btn btn-link" data-toggle="collapse" data-target={ "#collapse" + graphicCard.id} aria-expanded="false" aria-controls={ "collapse" + graphicCard.id}>
                     <i className="medium material-icons">arrow_downward</i>
                   </button>

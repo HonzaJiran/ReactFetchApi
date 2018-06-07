@@ -59,6 +59,29 @@ class Miners extends Component {
     })
   }
 
+  executeMiner(miner){
+    if (window.confirm('Do you really want to delete this miner?'))
+    {
+      fetch('http://monpick.thinkeasy.cz:7000/api/v1/miner/' + miner.miner.id, {
+        method: 'delete',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'JWT ' + sessionStorage.getItem('jwtToken')
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+            window.location.reload()
+        }
+      })
+    }
+    else
+    {
+
+    }
+
+  }
+
   render() {
     const miners = this.state.miners.map(miner => {
       return (
@@ -68,6 +91,8 @@ class Miners extends Component {
               <div className="card-header" id="headingOne">
                 <h5 className="mb-0">
                   <p>{miner.is_active === true ? <i className="medium material-icons icon-green">check</i> : <i className="medium material-icons icon-red">close</i>}</p>
+                  <p>{miner.miner.id}</p>
+                  <p>{miner.miner.miner_name}</p>
                   <p>{miner.miner.ip_address}</p>
                   <button className="btn btn-link" data-toggle="collapse" data-target={ "#collapse" + miner.id } aria-expanded="false" aria-controls={ "collapse" + miner.id}>
                     <i className="medium material-icons">arrow_downward</i>
@@ -91,6 +116,12 @@ class Miners extends Component {
                       );
                     })
                   }
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    onClick={this.executeMiner.bind(this,miner)}>
+                    Delete this miner
+                  </button>
                 </div>
               </div>
             </div>
