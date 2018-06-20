@@ -88,5 +88,10 @@ i.icon-red {
 
 .spans {
   margin: 0;
-   
 }
+
+.modal{
+   overflow-y: scroll !important;
+}
+
+.list-group-item, .list-group-item:hover{ z-index: auto; }

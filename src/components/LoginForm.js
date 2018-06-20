@@ -1,24 +1,23 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
-class Form extends Component {
+class LoginForm extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       username: '',
-      password: '',
-      show_input: true,
-      show_error: false
+      password: ''
     }
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
   onChange(e) {
-    this.setState({[e.target.name]: e.target.value});
+    this.setState({[e.target.name]: e.target.value})
   }
 
   onSubmit(e) {
-    e.preventDefault();
+    e.preventDefault()
       const userAuth = {
         username: this.state.username,
         password: this.state.password
@@ -37,10 +36,10 @@ class Form extends Component {
           }else {
             return res.json()
             .then(token => {
-              sessionStorage.setItem('jwtToken', token.token);
-              sessionStorage.setItem('username', this.state.username);
-              sessionStorage.setItem('password', this.state.password);
-              window.location.reload()
+              sessionStorage.setItem('jwtToken', token.token)
+              sessionStorage.setItem('username', this.state.username)
+              sessionStorage.setItem('password', this.state.password)
+              // window.location.reload()
             })
           }
 
@@ -50,27 +49,20 @@ class Form extends Component {
   render() {
     return (
         <div className="form">
-          {this.state.show_error &&
-            <div className="alert alert-danger" role="alert">
-              Bad username or password.
+          <form onSubmit={this.onSubmit}>
+            <div className="form-group">
+              <label htmlFor="exampleInputEmail1">Username</label>
+              <input name="username" type="text" onChange={this.onChange} value={this.state.username} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username" required />
             </div>
-          }
-          {this.state.show_input &&
-            <form onSubmit={this.onSubmit}>
-              <div className="form-group">
-                <label htmlFor="exampleInputEmail1">Username</label>
-                <input name="username" type="text" onChange={this.onChange} value={this.state.username} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username" required />
-              </div>
-              <div className="form-group">
-                <label htmlFor="exampleInputPassword1">Password</label>
-                <input name="password" type="password" onChange={this.onChange} value={this.state.password} className="form-control" id="exampleInputPassword1" placeholder="Password" required />
-              </div>
-              <button type="submit" className="btn btn-primary">Login</button>
-            </form>
-            }
+            <div className="form-group">
+              <label htmlFor="exampleInputPassword1">Password</label>
+              <input name="password" type="password" onChange={this.onChange} value={this.state.password} className="form-control" id="exampleInputPassword1" placeholder="Password" required />
+            </div>
+            <button type="submit" className="btn btn-primary"><Link to="/Dashboard">Login</Link></button>
+          </form>
         </div>
-    );
+    )
   }
 }
 
-export default Form;
+export default LoginForm

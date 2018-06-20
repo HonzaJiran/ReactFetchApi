@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 class CollectorBtn extends Component {
   render(){
     return(
-      <a className="nav-link" onClick={this.props.handleCollectors} href="#">Collectors</a>
+      <Link to="/Collectors" className="navbar-brand">Collectors</Link>
     )
   }
 }

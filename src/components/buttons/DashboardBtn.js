@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 class DashboardBtn extends Component {
   render(){
     return(
-      <a className="navbar-brand" href="#main" onClick={this.props.handleCollectors}>Dashboard</a>
+      <Link to="/Dashboard" className="navbar-brand">Dashboard</Link>
     )
   }
 }

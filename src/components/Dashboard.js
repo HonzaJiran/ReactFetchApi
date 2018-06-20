@@ -83,6 +83,7 @@ class Dashboard extends Component {
       .then(res => res.json())
       .then(miners => {
         this.setState({ miners: miners })
+        console.log(miners);
       })
 
       this.setState({ showminers: true })
