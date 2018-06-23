@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 class GraphicBtn extends Component {
   render(){
     return(
-      <a className="dropdown-item" onClick={this.props.handleGraphicCards} href="#">Graphic cards</a>
+      <Link to="/Cards" className="navbar-brand">Graphic cards</Link>
     )
   }
 }

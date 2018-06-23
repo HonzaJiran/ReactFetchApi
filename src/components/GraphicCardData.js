@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
 
-class GraphicCards extends Component {
+class Cards extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -78,11 +78,12 @@ class GraphicCards extends Component {
 
               <div id={ "collapse" + graphicCard.id} className={"collapse " + this.state.showAll} aria-labelledby="headingOne" data-parent="#accordion">
                 <div className="card-body">
+                <h5 className="text-primary">Miner performance</h5>
                     {
                       graphicCard.gpu_performance.map(performance => {
                         return(
                           <div key={performance.coin.id} className="GraphicCard_coin_info">
-                            <h5>{performance.coin.shortcut}</h5>
+                            <h5 className="text-secondary">{performance.coin.shortcut}</h5>
                             <p><b>Hashrate: </b>{performance.hashrate}</p>
                             <p><b>Invalid shares: </b>{performance.invalid_shares}</p>
                             <p><b>Rejected shares: </b>{performance.rejected_shares}</p>
@@ -91,6 +92,10 @@ class GraphicCards extends Component {
                         );
                       })
                     }
+                    <h5 className="text-primary">Relationships</h5>
+                    <p><b>Miner name: </b>{ graphicCard.graphic_card.miner.miner_name }</p>
+                    <p><b>Miner ip_address: </b>{ graphicCard.graphic_card.miner.ip_address }</p>
+                    <p><b>Runtime: </b>{ graphicCard.graphic_card.miner.runtime }</p>
                 </div>
               </div>
             </div>
@@ -99,13 +104,17 @@ class GraphicCards extends Component {
       );
     })
     return (
-      <div className="row">
+      <div className="cards-wraper">
         <button className="btn btn-warning" type="button" onClick={this.showAll}>Show all</button>
-        { graphicCards }
+        <div className="row">
+          <div className="container">
+            { graphicCards }
+          </div>
+        </div>
       </div>
     );
   }
 }
 
 
-export default GraphicCards;
+export default Cards;

@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 class LoginForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      redirect: false
     }
     this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
@@ -32,14 +33,14 @@ class LoginForm extends Component {
       })
         .then(res => {
           if (!res.ok) {
-            this.setState({ show_error: true })
+            console.log('something went wrong..');
           }else {
             return res.json()
             .then(token => {
               sessionStorage.setItem('jwtToken', token.token)
               sessionStorage.setItem('username', this.state.username)
               sessionStorage.setItem('password', this.state.password)
-              // window.location.reload()
+              this.setState({ redirect: true })
             })
           }
 
@@ -47,6 +48,10 @@ class LoginForm extends Component {
   }
 
   render() {
+    if (this.state.redirect || sessionStorage.getItem('username') && sessionStorage.getItem('password')) {
+      return ( <Redirect key="from-login" to={'/Dashboard'} /> )
+    }
+
     return (
         <div className="form">
           <form onSubmit={this.onSubmit}>
@@ -58,7 +63,7 @@ class LoginForm extends Component {
               <label htmlFor="exampleInputPassword1">Password</label>
               <input name="password" type="password" onChange={this.onChange} value={this.state.password} className="form-control" id="exampleInputPassword1" placeholder="Password" required />
             </div>
-            <button type="submit" className="btn btn-primary"><Link to="/Dashboard">Login</Link></button>
+            <button type="submit" className="btn btn-primary">Login</button>
           </form>
         </div>
     )

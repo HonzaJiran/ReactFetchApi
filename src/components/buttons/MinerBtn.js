@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 class MinerBtn extends Component {
   render(){
     return(
-      <a className="dropdown-item" onClick={this.props.handleMiners} href="#">Miners</a>
+      <Link className="navbar-brand" to="/Miners">Miners</Link>
     )
   }
 }

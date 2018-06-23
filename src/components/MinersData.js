@@ -71,7 +71,8 @@ class Miners extends Component {
       })
       .then(response => {
         if (response.ok) {
-            window.location.reload()
+            // window.location.reload()
+            console.log('miner deleted..');
         }
       })
     }
@@ -83,6 +84,7 @@ class Miners extends Component {
   }
 
   render() {
+    // rozdelit const miners do jineho souboru aby se to nacitalo az potom, co dostanu token a nepadalo to
     const miners = this.state.miners.map(miner => {
       return (
         <div className="tableCell" key={miner.id}>
@@ -131,8 +133,10 @@ class Miners extends Component {
     })
     return (
       <div className="row">
-         <button className="btn btn-warning" type="button" onClick={this.showAll}>Show all</button>
-        { miners }
+        <button className="btn btn-warning" type="button" onClick={this.showAll}>Show all</button>
+        <div className="container">
+          { miners }
+        </div>
       </div>
     );
   }

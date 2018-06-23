@@ -1,33 +1,29 @@
 import React, { Component } from 'react'
 import logo from './logo.svg'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { Route, Redirect, Switch } from 'react-router-dom'
 import './App.css'
 
 import LoginForm from './components/LoginForm'
 import Miners from './components/MinersData'
-import GraphicCards from './components/GraphicCardData'
+import Cards from './components/GraphicCardData'
 import Navbar from './components/Navbar'
 import Dashboard from './components/Dashboard'
-import AddMiner from './components/adding/AddMiner'
-import AddGraphicCard from './components/adding/AddGraphicCard'
 import Collectors from './components/Collectors/Collectors'
 
 class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      logout: false,
-      logged: false,
-      miners: []
-
+      redirect: false
     }
+    this.handleLogout = this.handleLogout.bind(this)
   }
 
   handleLogout(){
     sessionStorage.removeItem('jwtToken')
     sessionStorage.removeItem('username')
     sessionStorage.removeItem('password')
-    window.location.reload()
+    this.setState({redirect:true})
   }
 
   componentDidMount(){
@@ -45,13 +41,11 @@ class App extends Component {
     })
       .then(res => {
         if (!res.ok) {
-          this.setState({ show_form: true })
+          console.log('something went wrong');
         }else {
           return res.json()
           .then(token => {
             sessionStorage.setItem('jwtToken', token.token)
-            this.setState({ show_Dashboard: true })
-            this.setState({ show_navbar: true })
             console.log(token)
           })
         }
@@ -59,49 +53,74 @@ class App extends Component {
   }
 
   render() {
+    if (this.state.redirect) {
+      return (
+        <Redirect key="from-navbar" to={'/login'} />
+      )
+    }
     return (
-      <BrowserRouter>
         <div className="App">
               <div className="main-wrapper">
-                <Route exact path="/" render={(props) => {
-                  return(
-                    <div className="login-wrapper">
-                      <header className="App-header">
-                        <img src={logo} className="App-logo" alt="logo" />
-                      </header>
-                      <div className="container">
-                        <LoginForm />
+                  <Route exact path="/login" render={(props) => {
+                    return(
+                      <div className="login-wrapper">
+                        <header className="App-header">
+                          <img src={logo} className="App-logo" alt="logo" />
+                        </header>
+                        <div className="container">
+                          <LoginForm />
+                        </div>
                       </div>
-                    </div>
-                  )
-                }} />
-                <Route exact path="/Dashboard" render={(props) => {
-                  return(
-                    <div className="dashboard-wrapper">
-                      <Navbar />
-                      <header className="App-header">
-                        <img src={logo} className="App-logo" alt="logo" />
-                      </header>
-                      <div className="container">
-                        <Dashboard />
+                    )
+                  }} />
+                  <Route exact path="/Dashboard" render={(props) => {
+                    return(
+                      <div className="dashboard-wrapper">
+                        <Navbar handleLogout={this.handleLogout}/>
+                        <header className="App-header">
+                          <img src={logo} className="App-logo" alt="logo" />
+                        </header>
+                        <div className="container">
+                          <Dashboard />
+                        </div>
                       </div>
-                    </div>
-                  )
-                }} />
-                <Route exact path="/Collectors" render={(props) => {
-                  return(
-                    <div className="collectors-wrapper">
-                      <Navbar />
-                      <header className="App-header">
-                        <img src={logo} className="App-logo" alt="logo" />
-                      </header>
-                      <Collectors />
-                    </div>
-                  )
-                }} />
+                    )
+                  }} />
+                  <Route exact path="/Collectors" render={(props) => {
+                    return(
+                      <div className="collectors-wrapper">
+                        <Navbar handleLogout={this.handleLogout}/>
+                        <header className="App-header">
+                          <img src={logo} className="App-logo" alt="logo" />
+                        </header>
+                        <Collectors />
+                      </div>
+                    )
+                  }} />
+                  <Route exact path="/Miners" render={(props) => {
+                    return(
+                      <div className="miners-wrapper">
+                        <Navbar handleLogout={this.handleLogout}/>
+                        <header className="App-header">
+                          <img src={logo} className="App-logo" alt="logo" />
+                        </header>
+                        <Miners />
+                      </div>
+                    )
+                  }} />
+                  <Route exact path="/Cards" render={(props) => {
+                    return(
+                      <div className="miners-wrapper">
+                        <Navbar handleLogout={this.handleLogout}/>
+                        <header className="App-header">
+                          <img src={logo} className="App-logo" alt="logo" />
+                        </header>
+                        <Cards />
+                      </div>
+                    )
+                  }} />
               </div>
         </div>
-      </BrowserRouter>
     )
   }
 }

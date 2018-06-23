@@ -119,7 +119,7 @@ class Dashboard extends Component {
                     {
                       this.state.miners.map(miner => {
                         if (collector.id === miner.miner.collector.id) {
-                          return <a key={miner.id} className="list-group-item list-group-item-action">{miner.miner.miner_name}, <b>{miner.miner.id}</b><div>{miner.is_active === true ? <i className="medium material-icons icon-green">check</i> : <i className="medium material-icons icon-red">close</i>}</div></a>
+                          return (<a key={miner.id} className="list-group-item list-group-item-action">{miner.miner.miner_name}, <b>{miner.miner.id}</b><div>{miner.is_active === true ? <i className="medium material-icons icon-green">check</i> : <i className="medium material-icons icon-red">close</i>}</div></a>)
                         }
 
                       })
@@ -133,7 +133,7 @@ class Dashboard extends Component {
                     {
                       this.state.graphicCards.map(graphicCard => {
                         if (collector.id === graphicCard.graphic_card.miner.collector.id) {
-                          return <a key={graphicCard.id} className="list-group-item list-group-item-action">{graphicCard.graphic_card.name}<b>{graphicCard.graphic_card.id}</b><div>{graphicCard.is_active === true ? <i className="medium material-icons icon-green">check</i> : <i className="medium material-icons icon-red">close</i>}</div></a>
+                          return (<a key={graphicCard.id} className="list-group-item list-group-item-action">{graphicCard.graphic_card.name}<b>{graphicCard.graphic_card.id}</b><div>{graphicCard.is_active === true ? <i className="medium material-icons icon-green">check</i> : <i className="medium material-icons icon-red">close</i>}</div></a>)
                         }
 
                       })
