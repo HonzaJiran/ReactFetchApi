@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import './../../App.css';
 
+import AddNewToCollector from './AddNewToCollector';
+import ScanMiners from './ScanMiners'
+
 class Collectors extends Component {
   constructor(props){
     super(props);
     this.state = {
       collectors: [],
-      miners: []
+      miners: [],
+      active_collector: 1
     }
+    this.setCollector = this.setCollector.bind(this)
   }
 
   componentDidMount(){
@@ -66,12 +71,16 @@ class Collectors extends Component {
     })
   }
 
+  setCollector(id){
+  
+  }
+
   render(){
     const collectors = this.state.collectors.map(collector => {
       return (
         <li key={collector.id} className="list-group-item d-flex justify-content-between align-items-center">
           {collector.name}
-          <button type="button" className="btn btn-primary" data-toggle="modal" data-target={'#exampleModalLong' + collector.id}>
+          <button onClick={this.setCollector(collector.id)} type="button" className="btn detail-btn btn-primary" data-toggle="modal" data-target={'#exampleModalLong' + collector.id}>
             Collectors's detail
           </button>
 
@@ -85,16 +94,16 @@ class Collectors extends Component {
                   </button>
                 </div>
                 <div className="modal-body">
-                  <h5><b>Attributes</b></h5>
+                  <h5 className="text-primary"><b>Attributes</b></h5>
                     <div key={collector.id} className="collector-attributes">
-                      <h6>Name: <b>{collector.name}</b></h6>
+                      <h6><b>Name: </b>{collector.name}</h6>
                       <p><b>ID: </b>{collector.id}</p>
                       <p><b>IP address: </b>{collector.ip_address}</p>
                       <p><b>How often: </b>{collector.how_often}</p>
-                      <p><b>Is active: </b>{collector.is_active === true ? <i className="medium material-icons icon-green">check</i> : <i className="medium material-icons icon-red">close</i>}</p>
+                      <p><b>Is active: </b>{collector.is_active === true ? "TRUE" : <span className='text-danger'>FALSE</span> }</p>
                       </div>
                   <hr/>
-                  <h5><b>Relationships</b></h5>
+                  <h5 className="text-primary"><b>Relationships</b></h5>
                   {
                     this.state.miners.map(miner => {
                       if (collector.id === miner.miner.collector.id) {
@@ -136,15 +145,13 @@ class Collectors extends Component {
                           </div>
                         );
                       }else {
-                        return <p key={miner.id}>Nic tady neni</p>
+                        return null;
                       }
                     })
                   }
-                </div>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-primary">Save changes</button>
-                  <span className="btn btn-danger">Delete collector</span>
-                  <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <AddNewToCollector />
+                  <hr/>
+                  <ScanMiners />
                 </div>
               </div>
             </div>
@@ -170,12 +177,3 @@ class Collectors extends Component {
 }
 
 export default Collectors;
-// Rozkouskovat!!!
-  // <button className="btn btn-primary">Collector's detail</button>
-  // <button className="btn btn-warning">Edit collector</button>
-  // <button className="btn btn-success">Add new collector</button>
-  // <button className="btn btn-danger">Delete collector</button>
-// Rozkouskovat!!!{collector.is_active === true ? <i className="medium material-icons icon-green">check</i> : <i className="medium material-icons icon-red">close</i>}
-// <button className="btn btn-primary">Collector's detail</button>
-// <button className="btn btn-warning">Edit collector</button>
-// <button className="btn btn-danger">Delete collector</button>

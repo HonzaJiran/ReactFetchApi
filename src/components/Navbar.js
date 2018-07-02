@@ -4,6 +4,8 @@ import MinerBtn from './buttons/MinerBtn';
 import GraphicBtn from './buttons/GraphicBtn';
 import DashboardBtn from './buttons/DashboardBtn';
 import CollectorBtn from './buttons/CollectorBtn';
+import ControllersBtn from './buttons/ControllersBtn';
+import EventsBtn from './buttons/EventsBtn';
 
 class Navbar extends Component {
   render(){
@@ -23,6 +25,12 @@ class Navbar extends Component {
             </li>
             <li className="nav-item">
               <GraphicBtn/>
+            </li>
+            <li className="nav-item">
+              <ControllersBtn/>
+            </li>
+            <li className="nav-item">
+              <EventsBtn/>
             </li>
             <button onClick={this.props.handleLogout} className="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
           </ul>

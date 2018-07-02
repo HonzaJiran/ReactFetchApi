@@ -95,3 +95,11 @@ i.icon-red {
 }
 
 .list-group-item, .list-group-item:hover{ z-index: auto; }
+
+.btn.nohover:hover {
+  background-color: transparent;
+}
+
+.detail-btn {
+  float: right;
+}

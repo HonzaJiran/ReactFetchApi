@@ -23,6 +23,8 @@ class LoginForm extends Component {
         username: this.state.username,
         password: this.state.password
       }
+      console.log('submitted');
+      
 
       fetch('http://monpick.thinkeasy.cz:7000/api-auth/', {
         method: 'POST',
@@ -33,7 +35,8 @@ class LoginForm extends Component {
       })
         .then(res => {
           if (!res.ok) {
-            console.log('something went wrong..');
+            console.log('idk');
+            
           }else {
             return res.json()
             .then(token => {
@@ -48,7 +51,7 @@ class LoginForm extends Component {
   }
 
   render() {
-    if (this.state.redirect || sessionStorage.getItem('username') && sessionStorage.getItem('password')) {
+    if (this.state.redirect) {
       return ( <Redirect key="from-login" to={'/Dashboard'} /> )
     }
 

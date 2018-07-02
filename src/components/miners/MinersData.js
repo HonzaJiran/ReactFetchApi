@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
-import '../App.css';
+import React, { Component } from 'react'
+import '../../App.css'
+
+import AddMiner from './AddMiner'
 
 class Miners extends Component {
   constructor(props){
@@ -71,7 +73,6 @@ class Miners extends Component {
       })
       .then(response => {
         if (response.ok) {
-            // window.location.reload()
             console.log('miner deleted..');
         }
       })
@@ -84,7 +85,7 @@ class Miners extends Component {
   }
 
   render() {
-    // rozdelit const miners do jineho souboru aby se to nacitalo az potom, co dostanu token a nepadalo to
+    // rozdelit const miners do jineho souboru aby se to nacitalo az potom, co dostanu token a nepadalo to 0000000000 HODIT PRED TO 'IF' ABY TO ZACHITIL PRED SPADNUTIM (REDIRECT)
     const miners = this.state.miners.map(miner => {
       return (
         <div className="tableCell" key={miner.id}>
@@ -104,6 +105,7 @@ class Miners extends Component {
 
               <div id={ "collapse" + miner.id} className={"collapse " + this.state.showAll} aria-labelledby="headingOne" data-parent="#accordion">
                 <div className="card-body">
+                  <h4 className="text-primary"><b>Statistics</b></h4>
                   <p>{miner.miner.version}</p>
                   {
                     miner.miner_performance.map(performance => {
@@ -124,6 +126,20 @@ class Miners extends Component {
                     onClick={this.executeMiner.bind(this,miner)}>
                     Delete this miner
                   </button>
+                  <hr />
+                  <h4 className="text-primary"><b>Actions</b></h4>
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                  >
+                    Turn on/off
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-warning"
+                  >
+                    Restart
+                  </button>
                 </div>
               </div>
             </div>
@@ -132,10 +148,15 @@ class Miners extends Component {
       );
     })
     return (
-      <div className="row">
-        <button className="btn btn-warning" type="button" onClick={this.showAll}>Show all</button>
-        <div className="container">
-          { miners }
+      <div className="miners-wrapper">
+        <div className="column">
+          <button className="btn btn-warning" type="button" onClick={this.showAll}>Show all</button>
+          <AddMiner/>
+        </div>
+        <div className="row">
+          <div className="container">
+            { miners }
+          </div>
         </div>
       </div>
     );
