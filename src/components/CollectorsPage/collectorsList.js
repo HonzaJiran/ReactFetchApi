@@ -1,86 +1,16 @@
-import React, { Component } from 'react';
-import './../../App.css';
-
-import AddNewToCollector from './AddNewToCollector';
+import React from 'react'
+import AddNewToCollector from './AddNewToCollector'
 import ScanMiners from './ScanMiners'
 
-class Collectors extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      collectors: [],
-      miners: [],
-      active_collector: 1
-    }
-    this.setCollector = this.setCollector.bind(this)
-  }
-
-  componentDidMount(){
-    // USER AUTH
-    const jwtToken = sessionStorage.getItem('jwtToken');
-    const userAuth = {
-      username: sessionStorage.getItem('username'),
-      password: sessionStorage.getItem('password')
-    }
-
-    fetch('http://monpick.thinkeasy.cz:7000/api-auth/', {
-      method: 'POST',
-      headers: {
-        'Content-Type':'application/json'
-      },
-      body: JSON.stringify(userAuth)
-    })
-      .then(res => {
-        if (!res.ok) {
-          console.log('Something went wrong..');
-          window.location.reload();
-        }else {
-          return res.json()
-          .then(token => {
-            sessionStorage.setItem('jwtToken', token.token);
-            console.log(token);
-          })
-        }
-      })
-
-    // FETCH COLLECTORS
-    fetch('http://monpick.thinkeasy.cz:7000/api/v1/collector', {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'JWT ' + jwtToken
-      }
-    })
-    .then(res => res.json())
-    .then(collectors => {
-      console.log(collectors);
-      this.setState({ collectors: collectors })
-    })
-
-    // FETCH MINERS
-    fetch('http://monpick.thinkeasy.cz:7000/api/v1/status/miners', {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'JWT ' + sessionStorage.getItem('jwtToken')
-      }
-    })
-    .then(res => res.json())
-    .then(miners => {
-      this.setState({ miners: miners })
-    })
-  }
-
-  setCollector(id){
-  
-  }
-
-  render(){
-    const collectors = this.state.collectors.map(collector => {
+const CollectorsList = (props) => {
+  return (
+    <div>
+      {
+      props.collectors.map(collector => {
       return (
         <li key={collector.id} className="list-group-item d-flex justify-content-between align-items-center">
-          {collector.name}
-          <button onClick={this.setCollector(collector.id)} type="button" className="btn detail-btn btn-primary" data-toggle="modal" data-target={'#exampleModalLong' + collector.id}>
+          <p>{collector.name}</p>
+          <button type="button" className="btn detail-btn btn-primary" data-toggle="modal" data-target={'#exampleModalLong' + collector.id}>
             Collectors's detail
           </button>
 
@@ -100,12 +30,12 @@ class Collectors extends Component {
                       <p><b>ID: </b>{collector.id}</p>
                       <p><b>IP address: </b>{collector.ip_address}</p>
                       <p><b>How often: </b>{collector.how_often}</p>
-                      <p><b>Is active: </b>{collector.is_active === true ? "TRUE" : <span className='text-danger'>FALSE</span> }</p>
+                      <p><b>Is active: </b>{collector.is_active === true ? <span className='text-success'>TRUE</span> : <span className='text-danger'>FALSE</span> }</p>
                       </div>
                   <hr/>
                   <h5 className="text-primary"><b>Relationships</b></h5>
                   {
-                    this.state.miners.map(miner => {
+                    props.miners.map(miner => {
                       if (collector.id === miner.miner.collector.id) {
                         return (
                           <div className="tableCell" key={miner.id}>
@@ -122,7 +52,7 @@ class Collectors extends Component {
                                   </h5>
                                 </div>
 
-                                <div id={ "collapse" + miner.id} className={"collapse " + this.state.showAll} aria-labelledby="headingOne" data-parent="#accordion">
+                                <div id={ "collapse" + miner.id} className={"collapse false"} aria-labelledby="headingOne" data-parent="#accordion">
                                   <div className="card-body">
                                     <p>{miner.miner.version}</p>
                                     {
@@ -149,7 +79,7 @@ class Collectors extends Component {
                       }
                     })
                   }
-                  <AddNewToCollector />
+                  <AddNewToCollector id={collector.id} collName={collector.name} />
                   <hr/>
                   <ScanMiners />
                 </div>
@@ -160,20 +90,10 @@ class Collectors extends Component {
         </li>
       );
     })
-
-    return(
-      <div>
-        <br/>
-        <br/>
-        <h5>Collectors</h5>
-        <div className="container">
-          <ul className="list-group collectors">
-            { collectors }
-          </ul>
-        </div>
-      </div>
-    )
-  }
+    }
+    </div>
+  )
 }
 
-export default Collectors;
+export default CollectorsList
+

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Alert from 'react-s-alert';
 
 export default class ScanMiners extends Component {
   constructor(props){
@@ -19,11 +20,11 @@ export default class ScanMiners extends Component {
     e.preventDefault();
 
     const scanInfo = {
-      range: this.state.ipRange,
-      name: this.state.scanName
+      name: this.state.scanName,
+      range: this.state.ipRange
     }
 
-    fetch('http://monpick.thinkeasy.cz:7000/api/v1/colletor/refresh', {
+    fetch('https://monpick.thinkeasy.cz/api/v1/collector/refresh/', {
       method: 'POST',
       headers: {
         'Content-Type':'application/json',
@@ -31,15 +32,23 @@ export default class ScanMiners extends Component {
       },
       body: JSON.stringify(scanInfo)
     })
-    .then(res => {
-      if (!res.ok) {
-        console.log('Something went wrong..');
-      }else {
-        return res.json()
-        .then(token => {
-          console.log('Scan done');
-        })
-      }
+    .then(res => res.json())
+    .then(response => {
+      Alert.success(`${response.detail}`, {
+        position: 'bottom-right',
+        effect: 'slide',
+        timeout: 'none'
+      });
+      console.log(response);
+      
+    })
+    .catch(error => {
+      console.log(error);
+      Alert.error(`${error}`, {
+        position: 'bottom-right',
+        effect: 'slide',
+        timeout: 'none'
+      });
     })
   }
 

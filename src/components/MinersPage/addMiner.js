@@ -8,7 +8,7 @@ class AddMiner extends Component {
       miner_name: '',
       ip_address: '',
       mining_password: '',
-      collector: 1,
+      collector: undefined,
       is_disabled: true,
       collectors: []
     }
@@ -24,7 +24,7 @@ class AddMiner extends Component {
   }
 
   componentDidMount(){
-    fetch('http://monpick.thinkeasy.cz:7000/api/v1/collector', {
+    fetch('https://monpick.thinkeasy.cz/api/v1/collector/', {
       method: 'get',
       headers: {
         'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ class AddMiner extends Component {
     .then(res => res.json())
     .then(collectors => {
       console.log(collectors);
-      this.setState({ collectors: collectors })
+      this.setState({ collectors })
     })
   }
 
@@ -47,7 +47,7 @@ class AddMiner extends Component {
       is_disabled: this.state.is_disabled
     }
 
-    fetch('http://monpick.thinkeasy.cz:7000/api/v1/miner/add/', {
+    fetch('https://monpick.thinkeasy.cz/api/v1/miner/add/', {
       method: 'POST',
       headers: {
         'Content-Type':'application/json',
@@ -60,8 +60,9 @@ class AddMiner extends Component {
         console.log('Something went wrong..');
       }else {
         return res.json()
-        .then(token => {
-          console.log('Miner added');
+        .then(miner => {
+          console.log('Miner added' + miner);
+
         })
       }
     })
@@ -91,15 +92,15 @@ class AddMiner extends Component {
                   <form>
                     <div className="form-group">
                       <label htmlFor="exampleInputName">Name</label>
-                      <input type="text" name="miner_name" className="form-control" onChange={this.onChange} value={this.state.miner_name} id="exampleInputName" aria-describedby="emailHelp" placeholder="Enter miner name" required/>
+                      <input type="text" name="miner_name" className="form-control" onChange={this.onChange} value={this.state.miner_name} id="exampleInputName" aria-describedby="emailHelp" placeholder="Enter miner name" required />
                     </div>
                     <div className="form-group">
                       <label htmlFor="exampleInputPassword">IP address</label>
-                      <input name="ip_address" onChange={this.onChange} value={this.state.ip_address} type="text" className="form-control" id="exampleInputPassword" placeholder="Enter miner ip address" required/>
+                      <input name="ip_address" onChange={this.onChange} value={this.state.ip_address} type="text" className="form-control" id="exampleInputPassword" placeholder="Enter miner ip address" required />
                     </div>
                     <div className="form-group">
                       <label htmlFor="exampleInputMiningPassword">Mining password</label>
-                      <input name="mining_password" onChange={this.onChange} value={this.state.mining_password} type="text" className="form-control" id="exampleInputMiningPassword" placeholder="Enter mining password" required/>
+                      <input name="mining_password" onChange={this.onChange} value={this.state.mining_password} type="text" className="form-control" id="exampleInputMiningPassword" placeholder="Enter mining password" />
                     </div>
                     <div className="form-group">
                       <label htmlFor="selectCollector">Collector name</label>
@@ -112,7 +113,7 @@ class AddMiner extends Component {
                       </select>
                     </div>
                     <button
-                        className={ this.state.is_disabled ? "btn btn-outline-warning" : "btn btn-warning" + " nohover" }
+                        className={ this.state.is_disabled ? "btn btn-outline-warning nohover" : "btn btn-warning nohover" }
                         onClick={this.state.handleClick}>{this.state.is_disabled ? "DISABLED" : "ENABLED"}
                     </button>
                   </form>

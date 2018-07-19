@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+* {
+  text-align: center
+}
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
@@ -45,7 +49,14 @@ i.icon-red {
   padding: 0;
   display: inline;
   margin: 10px;
-  margin-left: 50px;
+}
+
+.mb-0 > b {
+  float: left;
+}
+
+.mb-0 {
+  margin-top: 12px;
 }
 
 .mb-0 > .btn {
@@ -101,5 +112,20 @@ i.icon-red {
 }
 
 .detail-btn {
+  position: absolute;
+  right: 50px;
+  transform: translateY(-50%)
+}
+
+.d-flex > p {
+  margin: 0;
+  padding: 20px;
+}
+
+.icon-green, .icon-red {
   float: right;
+}
+
+.text-left {
+  text-align: left;
 }
