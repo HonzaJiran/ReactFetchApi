@@ -33,7 +33,6 @@ class AddMiner extends Component {
     })
     .then(res => res.json())
     .then(collectors => {
-      console.log(collectors);
       this.setState({ collectors })
     })
   }

@@ -30,22 +30,22 @@ const GraphicCardsList = (props) => {
 
                 <h5 className="text-primary">Attributes</h5>
                 <p><b>ID: </b>{graphicCard.graphic_card.id}</p>
-                <p><b>Core clock: </b>{graphicCard.graphic_card.core_clock}</p>
-                <p><b>Memory clock: </b>{graphicCard.graphic_card.mem_clock}</p>
-                <p><b>Memory size: </b>{graphicCard.graphic_card.mem_size}</p>
+                <p><b>Core clock: </b>{graphicCard.graphic_card.core_clock} MHz</p>
+                <p><b>Memory clock: </b>{graphicCard.graphic_card.mem_clock} MHz</p>
+                <p><b>Memory size: </b>{graphicCard.graphic_card.mem_size} GB</p>
                 <p><b>Number: </b>{graphicCard.graphic_card.number}</p>
-                <p><b>VVDC: </b>{graphicCard.graphic_card.vvdc}</p>
-                <p><b>Temperature: </b>{graphicCard.graphic_card.temperature}</p>
+                <p><b>VVDC: </b>{graphicCard.graphic_card.vvdc} mV</p>
+                <p><b>Temperature: </b>{graphicCard.graphic_card.temperature} °C</p>
+                <p><b>Fan speed: </b>{graphicCard.graphic_card.fan_speed} %</p>
                 <p><b>Is active: </b>{graphicCard.is_active === true ? <span className='text-success'>TRUE</span> : <span className='text-danger'>FALSE</span> }</p>
-                <p><b>Is disabled: </b>{graphicCard.graphic_card.is_disabled === true ? <span className='text-danger'>DISABLED</span> : <span className='text-success'>ENABLED</span> }</p>
-
+                <p><b>Is disabled: </b>{graphicCard.graphic_card.is_disabled ? <span className='text-danger'>DISABLED</span> : <span className='text-success'>ENABLED</span> }</p>
                 <h5 className="text-primary">Statistics</h5>
                     {
                       graphicCard.gpu_performance.map(performance => {
                         return(
                           <div key={performance.coin.id} className="GraphicCard_coin_info">
                             <h5 className="text-secondary">{performance.coin.shortcut}</h5>
-                            <p><b>Hashrate: </b>{performance.hashrate}</p>
+                            <p><b>Hashrate: </b>{performance.hashrate} MH/s</p>
                             <p><b>Invalid shares: </b>{performance.invalid_shares}</p>
                             <p><b>Rejected shares: </b>{performance.rejected_shares}</p>
                             <p><b>Shares: </b>{performance.shares}</p>

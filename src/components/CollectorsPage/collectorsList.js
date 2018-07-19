@@ -54,16 +54,16 @@ const CollectorsList = (props) => {
 
                                 <div id={ "collapse" + miner.id} className={"collapse false"} aria-labelledby="headingOne" data-parent="#accordion">
                                   <div className="card-body">
-                                    <p>{miner.miner.version}</p>
+                                    <p><b>Version: </b>{miner.miner.version}</p>
                                     {
                                       miner.miner_performance.map(performance => {
                                         return(
                                           <div key={performance.coin.id} className="coin_info">
-                                            <h5>{performance.coin.shortcut}</h5>
-                                            <p><b>Total hashrate: </b>{performance.total_hashrate}</p>
+                                            <h5 className="text-primary">{performance.coin.shortcut}</h5>
+                                            <p><b>Total hashrate: </b>{performance.total_hashrate} MH/s</p>
                                             <p><b>Invalid shares: </b>{performance.total_invalid_shares}</p>
                                             <p><b>Rejected shares: </b>{performance.total_rejected_shares}</p>
-                                            <p><b>Is active: </b>{performance.total_shares}</p>
+                                            <p><b>Total shares: </b>{performance.total_shares}</p>  
                                           </div>
                                         );
                                       })

@@ -38,7 +38,6 @@ class Events extends Component {
     .then(res => res.json())
     .then(events => {
       this.setState({events})
-      console.log(events)
     })
     .catch(error => {
       console.log(error);

@@ -24,8 +24,6 @@ export default class EditMiner extends Component {
     .then(res => res.json())
     .then(minerInfo => {
       this.setState({ minerInfo })
-      console.log(this.state.minerInfo);
-      
     })
 
   }

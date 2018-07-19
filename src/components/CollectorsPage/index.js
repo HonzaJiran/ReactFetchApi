@@ -65,7 +65,7 @@ class Collectors extends Component {
   render(){
     return(
       <div>
-        <h5>Collectors</h5>
+        <h5 className="text-primary text-left">Collectors</h5>
         <ul className="list-group collectors">
           <CollectorsList collectors={this.state.collectors} miners={this.state.miners} />
         </ul>

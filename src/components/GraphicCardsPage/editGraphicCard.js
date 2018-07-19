@@ -22,8 +22,6 @@ export default class EditGraphicCard extends Component {
     .then(res => res.json())
     .then(graphicCardInfo => {
       this.setState({ graphicCardInfo })
-      console.log(this.state.graphicCardInfo);
-      
     })
 
   }
