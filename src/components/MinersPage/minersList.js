@@ -28,8 +28,8 @@ const MinersList = (props) => {
                 </div>
                 <div id={ "collapse" + miner.id} className={"collapse " + props.showAll} aria-labelledby="headingOne" data-parent="#accordion">
                   <div className="card-body">
-                    <h4 className="text-primary"><b>Statistics</b></h4>
-                    <p>{miner.miner.version}</p>
+                    <h4 className="text-primary">Statistics</h4>
+                    <p><b>Version: </b>{miner.miner.version}</p>
                     {
                       miner.miner_performance.map(performance => {
                         return(
@@ -45,7 +45,7 @@ const MinersList = (props) => {
                         );
                       })
                     }
-                    <h4 className="text-primary"><b>Relationships</b></h4>
+                    <h4 className="text-primary">Relationships</h4>
                     <h6><b>Name: </b>{miner.miner.collector.name}</h6>
                     <p><b>ID: </b>{miner.miner.collector.id}</p>
                     <p><b>IP address: </b>{miner.miner.collector.ip_address}</p>

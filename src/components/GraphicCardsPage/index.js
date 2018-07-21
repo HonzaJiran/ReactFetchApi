@@ -79,8 +79,12 @@ class GraphicCards extends Component {
   render() {
     return (
       <div className="cards-wraper">
-        <button className="btn btn-warning" type="button" onClick={this.showAll}>Show all</button>
-          <GraphicCardsList graphicCards={this.state.graphicCards} className={this.state.showAll} executeGraphicCard={this.executeGraphicCard}/>
+        <h5 className="text-primary text-left">Graphic cards</h5>
+        <br/>
+        <button className="btn btn-warning gpu-button float-left" type="button" onClick={this.showAll}>Show all</button>
+          <div>
+            <GraphicCardsList graphicCards={this.state.graphicCards} className={this.state.showAll} executeGraphicCard={this.executeGraphicCard}/>
+          </div>
       </div>
     );
   }

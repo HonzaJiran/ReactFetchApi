@@ -35,7 +35,7 @@ class Login extends Component {
       this.setState({redirect:true})
     })
     .catch(error => {
-      Alert.error(`${error}`, {
+      Alert.error(`Bad username or password.`, {
         position: 'bottom-right',
         effect: 'slide',
         timeout: 'none'
@@ -50,7 +50,7 @@ class Login extends Component {
 
     return (
       <div className="login-form">
-        <h4>Login</h4>
+        <h5 className="text-left text-primary">Login</h5>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label htmlFor="usernameInput">Username</label>

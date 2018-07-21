@@ -10,10 +10,9 @@ export default class AuthUser extends Component {
     })
     .then (res => {
       sessionStorage.setItem('jwtToken', res.data.token)
-      window.location.reload()
     })
     .catch(error => {
-      return( <Redirect to="/" />)
+      console.log(error);
     })
   }
 }

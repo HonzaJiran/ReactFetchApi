@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import './../../App.css'
+import { connect } from 'react-dom'
+import PropTypes from 'prop-types'
+import { addMiner } from '../../actions/minerActions'
 
 class AddMiner extends Component {
   constructor(props){
@@ -33,7 +35,8 @@ class AddMiner extends Component {
     })
     .then(res => res.json())
     .then(collectors => {
-      this.setState({ collectors })
+      this.setState({ collectors }
+      )
     })
   }
 
@@ -46,25 +49,7 @@ class AddMiner extends Component {
       is_disabled: this.state.is_disabled
     }
 
-    fetch('https://monpick.thinkeasy.cz/api/v1/miner/add/', {
-      method: 'POST',
-      headers: {
-        'Content-Type':'application/json',
-        'Authorization': 'JWT ' + sessionStorage.getItem('jwtToken')
-      },
-      body: JSON.stringify(minerInfo)
-    })
-    .then(res => {
-      if (!res.ok) {
-        console.log('Something went wrong..');
-      }else {
-        return res.json()
-        .then(miner => {
-          console.log('Miner added' + miner);
-
-        })
-      }
-    })
+    this.props.addMiner(minerInfo)
   }
 
   onChange(e) {
@@ -81,7 +66,7 @@ class AddMiner extends Component {
             <div className="modal-dialog" role="document">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+                  <h5 className="modal-title" id="exampleModalLabel">Add new miner</h5>
                   <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -131,4 +116,8 @@ class AddMiner extends Component {
   }
 }
 
-export default AddMiner
+AddMiner.propTypes = {
+  addMiner: PropTypes.func.isRequired
+}
+
+export default connect(null, {addMiner})(AddMiner);

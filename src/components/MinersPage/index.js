@@ -7,16 +7,23 @@ import Alert from 'react-s-alert';
 import MinersList from './minersList'
 import AddMiner from './addMiner'
 
+import { connect } from 'react-redux'
+import { fetchMiners } from '../../actions/minerActions'
+import PropTypes from 'prop-types'
+
 class Miners extends Component {
   constructor(props){
     super(props);
     this.state = {
-      miners: [],
       showAll: 'hide'
     };
     this.showAll = this.showAll.bind(this);
     this.authUser = this.authUser.bind(this);
     this.executeMiner = this.executeMiner.bind(this);
+  }
+
+  componentWillMount(){
+    this.props.fetchMiners()
   }
 
   showAll(){
@@ -40,24 +47,6 @@ class Miners extends Component {
     .catch(error => {
       console.log(error);
       return( <Redirect to="/" />)
-    })
-  }
-
-  componentDidMount(){
-    fetch('https://monpick.thinkeasy.cz/api/v1/status/miners/', {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'JWT ' + sessionStorage.getItem('jwtToken')
-      }
-    })
-    .then(res => res.json())
-    .then(miners => {
-      this.setState({miners})
-    })
-    .catch(error => {
-      console.log(error);
-      return(this.authUser())
     })
   }
 
@@ -91,15 +80,24 @@ class Miners extends Component {
   render() {
     return (
       <div className="miners-wrapper">
+        <h5 className="text-primary text-left">Miners</h5>
         <div className="row">
           <button className="btn btn-warning" type="button" onClick={this.showAll}>Show all</button>
           <AddMiner />
         </div>
-          <MinersList miners={this.state.miners} onClick={this.executeMiner} className={this.state.showAll}/>
+          <MinersList miners={this.props.miners} onClick={this.executeMiner} className={this.state.showAll}/>
       </div>
     );
   }
 }
 
+Miners.propTypes = {
+  fetchMiners: PropTypes.func.isRequired,
+  miners: PropTypes.array.isRequired
+}
 
-export default Miners;
+const mapStateToProps = state => ({
+  miners: state.miners.items
+})
+
+export default connect(mapStateToProps, {fetchMiners})(Miners);

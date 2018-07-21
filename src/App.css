@@ -129,3 +129,16 @@ i.icon-red {
 .text-left {
   text-align: left;
 }
+
+.gpus-list {
+  float: left;
+}
+
+.gpu-button {
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+input {
+  text-align: left;
+}

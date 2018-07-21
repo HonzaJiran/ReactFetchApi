@@ -49,6 +49,8 @@ class Events extends Component {
     
     return(
       <div>
+        <h5 className="text-primary text-left">Events</h5>
+        <br/>
         {this.state.events.map(event => {
           return(
             <div className="tableCell" key={event.date}>
