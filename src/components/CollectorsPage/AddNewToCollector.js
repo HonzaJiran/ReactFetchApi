@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
-import Alert from 'react-s-alert';
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-export default class AddNewToCollector extends Component {
+import {addNewMinerToCollector} from './../../actions/collectorActions'
+
+class AddNewToCollector extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -32,29 +35,7 @@ export default class AddNewToCollector extends Component {
       is_disabled: this.state.is_disabled
     }
 
-    fetch('https://monpick.thinkeasy.cz/api/v1/miner/add/', {
-      method: 'POST',
-      headers: {
-        'Content-Type':'application/json',
-        'Authorization': 'JWT ' + sessionStorage.getItem('jwtToken')
-      },
-      body: JSON.stringify(minerInfo)
-    })
-    .then(res => res.json())
-    .then(response => {
-      Alert.success(`Miner "${response.miner_name}" Added`, {
-        position: 'bottom-right',
-        effect: 'slide',
-        timeout: 'none'
-      });
-    })
-    .catch(error =>{
-      Alert.error(`${error}`, {
-        position: 'bottom-right',
-        effect: 'slide',
-        timeout: 'none'
-      });
-    })
+    this.props.addNewMinerToCollector(minerInfo)
   }
 
   onChange(e) {
@@ -112,3 +93,9 @@ export default class AddNewToCollector extends Component {
     )
   }
 }
+
+AddNewToCollector.propTypes = {
+  addNewMinerToCollector: PropTypes.func.isRequired
+}
+
+export default connect(null, { addNewMinerToCollector })(AddNewToCollector)

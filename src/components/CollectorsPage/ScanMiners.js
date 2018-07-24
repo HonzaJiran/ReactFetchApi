@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
-import Alert from 'react-s-alert';
+import {connect} from 'react-redux'
+import Proptypes from 'prop-types'
 
-export default class ScanMiners extends Component {
+import { scanMiners } from './../../actions/collectorActions'
+
+class ScanMiners extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -24,32 +27,7 @@ export default class ScanMiners extends Component {
       range: this.state.ipRange
     }
 
-    fetch('https://monpick.thinkeasy.cz/api/v1/collector/refresh/', {
-      method: 'POST',
-      headers: {
-        'Content-Type':'application/json',
-        'Authorization': 'JWT ' + sessionStorage.getItem('jwtToken')
-      },
-      body: JSON.stringify(scanInfo)
-    })
-    .then(res => res.json())
-    .then(response => {
-      Alert.success(`${response.detail}`, {
-        position: 'bottom-right',
-        effect: 'slide',
-        timeout: 'none'
-      });
-      console.log(response);
-      
-    })
-    .catch(error => {
-      console.log(error);
-      Alert.error(`${error}`, {
-        position: 'bottom-right',
-        effect: 'slide',
-        timeout: 'none'
-      });
-    })
+    this.props.scanMiners(scanInfo)
   }
 
   render() {
@@ -71,3 +49,9 @@ export default class ScanMiners extends Component {
     )
   }
 }
+
+ScanMiners.proptypes = {
+  scanMiners: Proptypes.func.isRequired
+}
+
+export default connect(null, { scanMiners })(ScanMiners)

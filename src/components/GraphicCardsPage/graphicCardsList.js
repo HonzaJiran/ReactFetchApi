@@ -1,4 +1,7 @@
 import React from 'react'
+import { connect } from 'react-redux'
+
+import { showAll } from './../../actions/globalActions'
 
 import EditGraphicCard from './editGraphicCard'
 
@@ -25,7 +28,7 @@ const GraphicCardsList = (props) => {
                 </h5>
               </div>
 
-              <div id={ "collapse" + graphicCard.id} className={"collapse " + props.showAll} aria-labelledby="headingOne" data-parent="#accordion">
+              <div id={ "collapse" + graphicCard.id} className={"collapse " + 'this.props.showAll'} aria-labelledby="headingOne" data-parent="#accordion">
                 <div className="card-body">
 
                 <h5 className="text-primary">Attributes</h5>
@@ -77,4 +80,8 @@ const GraphicCardsList = (props) => {
   )
 }
 
-export default GraphicCardsList
+const mapStateToProps = state => ({
+  showAll: state.global.showAll
+})
+
+export default connect(mapStateToProps, {showAll})(GraphicCardsList);

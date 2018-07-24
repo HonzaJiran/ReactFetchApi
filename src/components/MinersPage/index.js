@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import '../../App.css'
-import { Redirect } from 'react-router-dom'
-import axios from 'axios'
 import Alert from 'react-s-alert';
 
 import MinersList from './minersList'
@@ -18,7 +16,6 @@ class Miners extends Component {
       showAll: 'hide'
     };
     this.showAll = this.showAll.bind(this);
-    this.authUser = this.authUser.bind(this);
     this.executeMiner = this.executeMiner.bind(this);
   }
 
@@ -32,22 +29,6 @@ class Miners extends Component {
     }else {
       this.setState({ showAll: 'hide' })
     }
-  }
-
-  authUser(){
-    axios.post(`https://monpick.thinkeasy.cz/api-auth/`, {
-      username: sessionStorage.getItem('username'),
-      password: sessionStorage.getItem('password')
-    })
-    .then (res => {
-      console.log(res.data.token);
-      
-      sessionStorage.setItem('jwtToken', res.data.token)
-    })
-    .catch(error => {
-      console.log(error);
-      return( <Redirect to="/" />)
-    })
   }
 
   executeMiner(miner){

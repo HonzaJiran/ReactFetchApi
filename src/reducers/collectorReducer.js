@@ -1,38 +1,31 @@
-import {FETCH_MINERS, ADD_MINER, EDIT_MINER, MINER_ACTION} from '../actions/types'
+import {FETCH_COLLECTORS, ADD_NEW_MINER, SCAN_MINERS} from '../actions/types'
 
 const initialState = {
   items: [],
   item: {},
-  edited: {},
-  miner_action: {}
+  scan: {}
 }
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case FETCH_MINERS:
+    case FETCH_COLLECTORS:
       return{
         ...state,
         items: action.payload
       };
-    
-    case ADD_MINER:
+      
+    case ADD_NEW_MINER:
       return{
         ...state,
         item: action.payload
       };
-    
-    case EDIT_MINER:
-      return{
-        ...state,
-        edited: action.payload
-      };
 
-    case MINER_ACTION:
+    case SCAN_MINERS:
       return{
         ...state,
-        miner_action: action.payload
+        scan: action.payload
       }
-  
+
     default:
       return state;
   }

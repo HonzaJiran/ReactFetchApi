@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { connect } from 'react-dom'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { addMiner } from '../../actions/minerActions'
 

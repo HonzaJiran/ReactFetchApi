@@ -1,65 +1,16 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom'
-import axios from 'axios'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import CollectorsList from './collectorsList'
 
+import { fetchCollectors } from './../../actions/collectorActions'
+import { fetchMiners } from './../../actions/minerActions'
+
 class Collectors extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      collectors: [],
-      miners: []
-    }
-  }
-
-  authUser(){
-    axios.post(`https://monpick.thinkeasy.cz/api-auth/`, {
-      username: sessionStorage.getItem('username'),
-      password: sessionStorage.getItem('password')
-    })
-    .then (res => {
-      sessionStorage.setItem('jwtToken', res.data.token)
-    })
-    .catch(error => {
-      return( <Redirect to="/" />)
-    })
-  }
-
-  componentDidMount(){
-    // FETCH COLLECTORS
-    fetch('https://monpick.thinkeasy.cz/api/v1/collector/', {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'JWT ' + sessionStorage.getItem('jwtToken')
-      }
-    })
-    .then(res => res.json())
-    .then(collectors => {
-      this.setState({ collectors })
-    })
-    .catch(error => {
-      console.log(error);
-      return(this.authUser())
-    })
-
-    // FETCH MINERS
-    fetch('https://monpick.thinkeasy.cz/api/v1/status/miners/', {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'JWT ' + sessionStorage.getItem('jwtToken')
-      }
-    })
-    .then(res => res.json())
-    .then(miners => {
-      this.setState({ miners })
-    })
-    .catch(error => {
-      console.log(error);
-      return(this.authUser())
-    })
+  componentWillMount(){
+    this.props.fetchCollectors()
+    this.props.fetchMiners()
   }
 
   render(){
@@ -67,11 +18,23 @@ class Collectors extends Component {
       <div>
         <h5 className="text-primary text-left">Collectors</h5>
         <ul className="list-group collectors">
-          <CollectorsList collectors={this.state.collectors} miners={this.state.miners} />
+          <CollectorsList collectors={this.props.collectors} miners={this.props.miners} />
         </ul>
       </div>
     )
   }
 }
 
-export default Collectors;
+Collectors.propTypes = {
+  fetchCollectors: PropTypes.func.isRequired,
+  collectors: PropTypes.array.isRequired,
+  fetchMiners: PropTypes.func.isRequired,
+  miners: PropTypes.array.isRequired
+}
+
+const mapStateToProps = state => ({
+  collectors: state.collectors.items,
+  miners: state.miners.items
+})
+
+export default connect(mapStateToProps, {fetchCollectors, fetchMiners})(Collectors);

@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-export default class EditMiner extends Component {
+import { editMiner } from './../../actions/minerActions'
+
+class EditMiner extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -11,9 +15,10 @@ export default class EditMiner extends Component {
       miner_name: '',
       rb: '',
     }
+    this.FetchEditMiner = this.FetchEditMiner.bind(this)
   }
 
-  editMiner(){
+  FetchEditMiner(){
     fetch(`https://monpick.thinkeasy.cz/api/v1/miner/${this.props.id}/`, {
       method: 'GET',
       headers: {
@@ -36,24 +41,9 @@ export default class EditMiner extends Component {
       rb_cable: this.state.minerInfo.rb_cable
     }
 
-    fetch(`https://monpick.thinkeasy.cz/api/v1/miner/${this.props.id}/`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type':'application/json',
-        'Authorization': 'JWT ' + sessionStorage.getItem('jwtToken')
-      },
-      body: JSON.stringify(minerInfo)
-    })
-      .then(res => {
-        if (!res.ok) {
-          console.log('Something went wrong..' + res);
-        }else {
-          return res.json()
-          .then(result => {
-            console.log(result);
-          })
-        }
-      })
+    const id = this.props.id;
+
+    this.props.editMiner(minerInfo, id)
   }
 
   handleName(e) {
@@ -102,7 +92,7 @@ export default class EditMiner extends Component {
   render() {
     return (
       <div className="edit-miner">
-        <button onClick={this.editMiner.bind(this)} type="button" className="btn btn-info" data-toggle="modal" data-target={'#exampleModalLong' + this.props.id}>Edit</button>
+        <button onClick={this.FetchEditMiner} type="button" className="btn btn-info" data-toggle="modal" data-target={'#exampleModalLong' + this.props.id}>Edit</button>
         <div className="modal fade" id={'exampleModalLong' + this.props.id} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
@@ -146,3 +136,9 @@ export default class EditMiner extends Component {
     )
   }
 }
+
+EditMiner.propTypes = {
+  editMiner: PropTypes.func.isRequired
+}
+
+export default connect(null, { editMiner })(EditMiner)

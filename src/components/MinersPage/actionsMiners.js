@@ -1,44 +1,35 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-export default class ActionsMiners extends Component {
+import { minerAction } from './../../actions/minerActions'
+
+class ActionsMiners extends Component {
   constructor(props){
     super(props)
     this.state = {
-      action: 0
+      miner_action: 0
     }
+    this.onChange = this.onChange.bind(this)
   }
 
   makeAction(){
     const actionInfo = {
       miner: this.props.id,
-      action: this.state.action
+      miner_action: this.state.miner_action
     }
-
-    const url = 'https://monpick.thinkeasy.cz/api/v1/miner/action/'
-
-    fetch(url, {
-      method: 'POST', //should be GET by monpick
-      headers: {
-        'Content-Type':'application/json',
-        'Authorization': 'JWT ' + sessionStorage.getItem('jwtToken')
-      },
-      body: JSON.stringify(actionInfo)
-    })
-    .then(res => {
-      console.log(res);
-      
-    })
+    this.props.minerAction(actionInfo)
   }
 
   onChange(e) {
-    this.setState({action: e.target.value});
+    this.setState({miner_action: e.target.value});
   }
 
   render() {
     return (
       <div className="miners-actions">
         <h4 className="text-primary"><b>Actions</b></h4>
-        <select value={this.state.action} onChange={this.onChange.bind(this)}>
+        <select value={this.state.miner_action} onChange={this.onChange}>
           <option value="1">Miner restart</option>
           <option value="2">Miner reboot</option>
           <option value="3">Miner start</option>
@@ -54,3 +45,10 @@ export default class ActionsMiners extends Component {
     )
   }
 }
+
+
+ActionsMiners.propTypes = {
+  minerAction: PropTypes.func.isRequired
+}
+
+export default connect(null, { minerAction })(ActionsMiners)

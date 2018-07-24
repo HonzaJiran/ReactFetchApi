@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-export default class EditGraphicCard extends Component {
+import { editGpu } from './../../actions/graphicCardActions'
+
+class EditGraphicCard extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -32,24 +36,10 @@ export default class EditGraphicCard extends Component {
       is_disabled: this.state.graphicCardInfo.is_disabled
     }
 
-    fetch(`https://monpick.thinkeasy.cz/api/v1/graphiccard/${this.props.id}/`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type':'application/json',
-        'Authorization': 'JWT ' + sessionStorage.getItem('jwtToken')
-      },
-      body: JSON.stringify(graphicCardInfo)
-    })
-      .then(res => {
-        if (!res.ok) {
-          console.log('Something went wrong..' + res);
-        }else {
-          return res.json()
-          .then(result => {
-            console.log(result);
-          })
-        }
-      })
+    const id = this.props.id
+
+    this.props.editGpu(graphicCardInfo, id)
+
   }
 
   onChange(e) {
@@ -113,3 +103,9 @@ export default class EditGraphicCard extends Component {
     )
   }
 }
+
+EditGraphicCard.propTypes = {
+  editGpu: PropTypes.func.isRequired
+}
+
+export default connect(null, {editGpu})(EditGraphicCard);
