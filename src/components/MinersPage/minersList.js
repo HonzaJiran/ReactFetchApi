@@ -17,7 +17,7 @@ const MinersList = (props) => {
               <div className="card">
                 <div className="card-header" id="headingOne">
                   <h5 className="mb-0">
-                    <p>{miner.is_active === true ? <i className="medium material-icons icon-green">check</i> : <i className="medium material-icons icon-red">close</i>}</p>
+                    <p>{miner.is_active ? <i className="medium material-icons icon-green">check</i> : <i className="medium material-icons icon-red">close</i>}</p>
                     <b>{miner.miner.id}</b>
                     <p>{miner.miner.miner_name}</p>
                     <p>{miner.miner.ip_address}</p>
@@ -28,19 +28,24 @@ const MinersList = (props) => {
                 </div>
                 <div id={ "collapse" + miner.id} className={"collapse " + props.showAll} aria-labelledby="headingOne" data-parent="#accordion">
                   <div className="card-body">
+                    <h4 className="text-primary">Attributes</h4>
+                      <p><b>Miner id: </b>{miner.miner.id}</p>
+                      <p><b>Miner name: </b>{miner.miner.miner_name}</p>
+                      <p><b>Miner IP adress: </b>{miner.miner.ip_address}</p>
+                      <p><b>Is active: </b>{miner.is_active ? <span className='text-success'>TRUE</span> : <span className='text-danger'>FALSE</span> }</p>
+                      <p><b>Is disabled: </b>{miner.miner.is_disabled ? <span className='text-danger'>DISABLED</span> : <span className='text-success'>ENABLED</span> }</p>
+                      <p><b>Version: </b>{miner.miner.version}</p>
+                      
                     <h4 className="text-primary">Statistics</h4>
-                    <p><b>Version: </b>{miner.miner.version}</p>
                     {
                       miner.miner_performance.map(performance => {
                         return(
                           <div key={performance.coin.id} className="coin_info">
-                            <h6 className="text-secondary">{performance.coin.shortcut}</h6>
+                            <h5 className="text-secondary">{performance.coin.shortcut}</h5>
                             <p><b>Total hashrate: </b>{performance.total_hashrate}</p>
                             <p><b>Invalid shares: </b>{performance.total_invalid_shares}</p>
                             <p><b>Rejected shares: </b>{performance.total_rejected_shares}</p>
                             <p><b>Total shares: </b>{performance.total_shares}</p>
-                            <p><b>Is active: </b>{miner.is_active === true ? <span className='text-success'>TRUE</span> : <span className='text-danger'>FALSE</span> }</p>
-                            <p><b>Is disabled: </b>{miner.miner.is_disabled === true ? <span className='text-success'>ENABLED</span> : <span className='text-danger'>DISABLED</span> }</p>
                           </div>
                         );
                       })
@@ -50,7 +55,7 @@ const MinersList = (props) => {
                     <p><b>ID: </b>{miner.miner.collector.id}</p>
                     <p><b>IP address: </b>{miner.miner.collector.ip_address}</p>
                     <p><b>How often: </b>{miner.miner.collector.how_often}</p>
-                    <p><b>Is active: </b>{miner.miner.collector.is_active === true ? <span className='text-success'>TRUE</span> : <span className='text-danger'>FALSE</span> }</p>
+                    <p><b>Is active: </b>{miner.miner.collector.is_active ? <span className='text-success'>TRUE</span> : <span className='text-danger'>FALSE</span> }</p>
                     <EditMiner id={miner.miner.id}/>
                     <button
                       type="button"

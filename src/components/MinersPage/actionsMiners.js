@@ -18,6 +18,9 @@ class ActionsMiners extends Component {
       miner: this.props.id,
       miner_action: this.state.miner_action
     }
+
+    console.log(actionInfo);
+    
     this.props.minerAction(actionInfo)
   }
 

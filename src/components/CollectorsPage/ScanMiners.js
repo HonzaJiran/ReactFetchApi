@@ -9,7 +9,7 @@ class ScanMiners extends Component {
     super(props)
     this.state = {
       ipRange: '',
-      scanName: ''
+      scanName: this.props.currentScannedMinerId
     }
     this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
@@ -33,15 +33,15 @@ class ScanMiners extends Component {
   render() {
     return (
       <div className="miner-scan">
-        <h5 className="text-primary"><b>Scan for minners</b></h5>
+        <h5 className="text-primary"><b>Scan for miners</b></h5>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label htmlFor="scan-range">Range: </label>
             <input name="ipRange" onChange={this.onChange} value={this.state.ipRange} type="text" className="form-control" placeholder="Enter IP range" />
           </div>
           <div className="form-group">
-            <label htmlFor="scan-name">Name: </label>
-            <input name="scanName" onChange={this.onChange} value={this.state.scanName} type="text" className="form-control" placeholder="Enter name" />
+            <label htmlFor="scan-name">Scan miners for collector: </label>
+            <span><b> {this.props.currentScannedMinerName}</b></span>
           </div>
           <button type="submit" className="btn btn-primary">Scan</button>
         </form>

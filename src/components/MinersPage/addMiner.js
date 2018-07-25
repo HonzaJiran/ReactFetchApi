@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+
 import { addMiner } from '../../actions/minerActions'
+import { fetchCollectors } from './../../actions/collectorActions'
 
 class AddMiner extends Component {
   constructor(props){
@@ -11,8 +13,7 @@ class AddMiner extends Component {
       ip_address: '',
       mining_password: '',
       collector: undefined,
-      is_disabled: true,
-      collectors: []
+      is_disabled: true
     }
     this.handleClick = this.handleClick.bind(this)
     this.handleAdd = this.handleAdd.bind(this)
@@ -25,19 +26,8 @@ class AddMiner extends Component {
       : this.setState({ is_disabled: true })
   }
 
-  componentDidMount(){
-    fetch('https://monpick.thinkeasy.cz/api/v1/collector/', {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'JWT ' + sessionStorage.getItem('jwtToken')
-      }
-    })
-    .then(res => res.json())
-    .then(collectors => {
-      this.setState({ collectors }
-      )
-    })
+  componentWillMount(){
+    this.props.fetchCollectors()
   }
 
   handleAdd(){
@@ -87,10 +77,10 @@ class AddMiner extends Component {
                       <input name="mining_password" onChange={this.onChange} value={this.state.mining_password} type="text" className="form-control" id="exampleInputMiningPassword" placeholder="Enter mining password" />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="selectCollector">Collector name</label>
+                      <label htmlFor="selectCollector">Collector's name: </label>
                       <select name="collector" value={this.state.collector} onChange={this.onChange}>
                         {
-                          this.state.collectors.map(collector => {
+                          this.props.collectors.map(collector => {
                             return <option value={collector.id} key={collector.id}>{collector.name}</option>
                           })
                         }
@@ -117,7 +107,13 @@ class AddMiner extends Component {
 }
 
 AddMiner.propTypes = {
-  addMiner: PropTypes.func.isRequired
+  addMiner: PropTypes.func.isRequired,
+  fetchCollectors: PropTypes.func.isRequired,
+  collectors: PropTypes.array.isRequired
 }
 
-export default connect(null, {addMiner})(AddMiner);
+const mapPropsToState = state => ({
+  collectors: state.collectors.items
+})
+
+export default connect(mapPropsToState, {addMiner, fetchCollectors})(AddMiner);

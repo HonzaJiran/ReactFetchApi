@@ -81,7 +81,7 @@ const CollectorsList = (props) => {
                   }
                   <AddNewToCollector id={collector.id} collName={collector.name} />
                   <hr/>
-                  <ScanMiners />
+                  <ScanMiners currentScannedMinerId={collector.id} currentScannedMinerName={collector.name} />
                 </div>
               </div>
             </div>

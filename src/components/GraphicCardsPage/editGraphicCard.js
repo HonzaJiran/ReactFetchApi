@@ -13,6 +13,10 @@ class EditGraphicCard extends Component {
         is_disabled: true
       }
     }
+    this.postEditGraphicCard = this.postEditGraphicCard.bind(this)
+    this.handleDisable = this.handleDisable.bind(this)
+    this.onChange  = this.onChange.bind(this)
+    this.editGraphicCard = this.editGraphicCard.bind(this)
   }
 
   editGraphicCard(){
@@ -70,12 +74,12 @@ class EditGraphicCard extends Component {
   render() {
     return (
       <div className="edit-graphiccard">
-        <button onClick={this.editGraphicCard.bind(this)} type="button" className="btn btn-info" data-toggle="modal" data-target={'#exampleModalLong' + this.props.id}>Edit</button>
+        <button onClick={this.editGraphicCard} type="button" className="btn btn-info" data-toggle="modal" data-target={'#exampleModalLong' + this.props.id}>Edit</button>
         <div className="modal fade" id={'exampleModalLong' + this.props.id} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 className="modal-title" id="exampleModalLabel">{this.state.graphicCardInfo.name}</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -84,17 +88,17 @@ class EditGraphicCard extends Component {
 
                 <div className="form-group">
                   <label htmlFor="exampleInputName">Name</label>
-                  <input name="name" type="text" className="form-control" onChange={this.onChange.bind(this)} value={this.state.graphicCardInfo.name} id="exampleInputName" aria-describedby="nameHelp" placeholder={this.state.graphicCardInfo.name} />
+                  <input name="name" type="text" className="form-control" onChange={this.onChange} value={this.state.graphicCardInfo.name} id="exampleInputName" aria-describedby="nameHelp" placeholder={this.state.graphicCardInfo.name} />
                 </div>
                 <button
                       className={ this.state.graphicCardInfo.is_disabled ? "btn btn-outline-danger nohover" : "btn btn-danger nohover" }
-                      onClick={this.handleDisable.bind(this)}>{this.state.graphicCardInfo.is_disabled ? "DISABLED" : "ENABLED"}
+                      onClick={this.handleDisable}>{this.state.graphicCardInfo.is_disabled ? "DISABLED" : "ENABLED"}
                 </button>
 
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" onClick={this.postEditGraphicCard.bind(this)} className="btn btn-primary">Save changes</button>
+                <button type="button" onClick={this.postEditGraphicCard} className="btn btn-primary">Save changes</button>
               </div>
             </div>
           </div>

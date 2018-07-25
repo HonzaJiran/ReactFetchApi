@@ -8,14 +8,18 @@ class EditMiner extends Component {
   constructor(props){
     super(props)
     this.state = {
-      minerInfo: {
-        is_disabled: undefined,
-        rb_cable: false
-      },
+      is_disabled: undefined,
+      rb_cable: false,
       miner_name: '',
       rb: '',
+      currentMiner: {}
     }
     this.FetchEditMiner = this.FetchEditMiner.bind(this)
+    this.handleName = this.handleName.bind(this)
+    this.handleRb = this.handleName.bind(this)
+    this.handleRbCable = this.handleRbCable.bind(this)
+    this.handleDisable = this.handleDisable.bind(this)
+    this.postEditedMiner = this.postEditedMiner.bind(this)
   }
 
   FetchEditMiner(){
@@ -27,8 +31,8 @@ class EditMiner extends Component {
       }
     })
     .then(res => res.json())
-    .then(minerInfo => {
-      this.setState({ minerInfo })
+    .then(currentMiner => {
+      this.setState({ currentMiner })
     })
 
   }
@@ -97,7 +101,7 @@ class EditMiner extends Component {
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">{this.state.minerInfo.miner_name}</h5>
+                <h5 className="modal-title" id="exampleModalLabel">{this.state.currentMiner.miner_name}</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -106,28 +110,28 @@ class EditMiner extends Component {
 
                 <div className="form-group">
                   <label htmlFor="exampleInputName">Name</label>
-                  <input name="miner_name" type="text" className="form-control" onChange={this.handleName.bind(this)} value={this.state.miner_name} id="miner_name" aria-describedby="nameHelp" />
+                  <input name="miner_name" type="text" className="form-control" onChange={this.handleName} value={this.state.miner_name} id="miner_name" placeholder={this.state.currentMiner.miner_name || ''} aria-describedby="nameHelp" />
                 </div>
                 <div className="form-group">
                   <label htmlFor="exampleInputName">Rb</label>
-                  <input name="rb" type="text" className="form-control" onChange={this.handleRb.bind(this)} value={this.state.rb || ""} id="rb" aria-describedby="nameHelp"  />
+                  <input name="rb" type="text" className="form-control" onChange={this.handleRb} value={this.state.rb || ""} id="rb" placeholder={this.state.currentMiner.rb || ''} aria-describedby="nameHelp"  />
                 </div>
                 <button
-                      className={ this.state.minerInfo.rb_cable ? "btn btn-outline-warning nohover" : "btn btn-warning nohover" }
+                      className={ this.state.rb_cable ? "btn btn-warning nohover" : "btn btn-outline-warning nohover" }
                       id="rb_cable"
-                      onClick={this.handleRbCable.bind(this)}>{this.state.minerInfo.rb_cable ? "CONNECTED" : "DISCONNECTED" || ""}
+                      onClick={this.handleRbCable}>{this.state.currentMiner.rb_cable ? "CONNECTED" : "DISCONNECTED" || ""}
                 </button>
            
                 <button
-                      className={ this.state.minerInfo.is_disabled ? "btn btn-outline-danger nohover" : "btn btn-danger nohover" }
-                      onClick={this.handleDisable.bind(this)}>{this.state.minerInfo.is_disabled ? "DISABLED" : "ENABLED" || ""}
+                      className={ this.state.is_disabled ? "btn btn-outline-danger nohover" : "btn btn-danger nohover" }
+                      onClick={this.handleDisable}>{this.state.currentMiner.is_disabled ? "DISABLED" : "ENABLED" || ""}
                 </button>
                
 
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" onClick={this.postEditedMiner.bind(this)} className="btn btn-primary">Save changes</button>
+                <button type="button" onClick={this.postEditedMiner} className="btn btn-primary">Save changes</button>
               </div>
             </div>
           </div>
