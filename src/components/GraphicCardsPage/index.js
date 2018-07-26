@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom'
-import axios from 'axios'
 
 import GraphicCardsList from './graphicCardsList'
 
@@ -12,23 +10,6 @@ class GraphicCards extends Component {
   constructor(props){
     super(props);
     this.executeGraphicCard = this.executeGraphicCard.bind(this)
-    this.authUser = this.authUser.bind(this);
-  }
-
-  authUser(){
-    axios.post(`https://monpick.thinkeasy.cz/api-auth/`, {
-      username: sessionStorage.getItem('username'),
-      password: sessionStorage.getItem('password')
-    })
-    .then (res => {
-      console.log(res.data.token);
-      
-      sessionStorage.setItem('jwtToken', res.data.token)
-    })
-    .catch(error => {
-      console.log(error);
-      return( <Redirect to="/" />)
-    })
   }
 
   executeGraphicCard(graphicCard){
@@ -49,7 +30,7 @@ class GraphicCards extends Component {
     }
   }
 
-  componentWillMount(){
+  componentDidMount(){
     this.props.fetchGpus()
   }
   render() {

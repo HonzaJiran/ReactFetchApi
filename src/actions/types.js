@@ -7,6 +7,7 @@ export const MINER_ACTION = 'MINER_ACTION'
 //GPUs
 export const FETCH_GPUS = 'FETCH_GPUS'
 export const EDIT_GPU = 'EDIT_GPU'
+export const SINGLE_GPU = 'SINGLE_GPU'
 
 //Global
 export const SHOW_ALL = 'SHOW_ALL'
@@ -18,3 +19,6 @@ export const SCAN_MINERS = 'SCAN_MINERS'
 
 //Events
 export const FETCH_EVENTS ='FETCH_EVENTS'
+
+//Login
+export const AUTH_USER = 'AUTH_USER'

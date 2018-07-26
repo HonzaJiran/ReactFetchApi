@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { editGpu } from './../../actions/graphicCardActions'
+import { editGpu, getSingleGpu } from './../../actions/graphicCardActions'
 
 class EditGraphicCard extends Component {
   constructor(props){
@@ -20,18 +20,7 @@ class EditGraphicCard extends Component {
   }
 
   editGraphicCard(){
-    fetch(`https://monpick.thinkeasy.cz/api/v1/graphiccard/${this.props.id}/`, {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'JWT ' + sessionStorage.getItem('jwtToken')
-      }
-    })
-    .then(res => res.json())
-    .then(graphicCardInfo => {
-      this.setState({ graphicCardInfo })
-    })
-
+    this.props.getSingleGpu(this.props.id)
   }
 
   postEditGraphicCard(){
@@ -40,9 +29,7 @@ class EditGraphicCard extends Component {
       is_disabled: this.state.graphicCardInfo.is_disabled
     }
 
-    const id = this.props.id
-
-    this.props.editGpu(graphicCardInfo, id)
+    this.props.editGpu(graphicCardInfo, this.props.id)
 
   }
 
@@ -79,7 +66,7 @@ class EditGraphicCard extends Component {
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">{this.state.graphicCardInfo.name}</h5>
+                <h5 className="modal-title" id="exampleModalLabel">{this.props.singleGpu.name}</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -88,11 +75,11 @@ class EditGraphicCard extends Component {
 
                 <div className="form-group">
                   <label htmlFor="exampleInputName">Name</label>
-                  <input name="name" type="text" className="form-control" onChange={this.onChange} value={this.state.graphicCardInfo.name} id="exampleInputName" aria-describedby="nameHelp" placeholder={this.state.graphicCardInfo.name} />
+                  <input name="name" type="text" className="form-control" onChange={this.onChange} value={this.state.graphicCardInfo.name} id="exampleInputName" aria-describedby="nameHelp" placeholder={this.props.singleGpu.name} />
                 </div>
                 <button
-                      className={ this.state.graphicCardInfo.is_disabled ? "btn btn-outline-danger nohover" : "btn btn-danger nohover" }
-                      onClick={this.handleDisable}>{this.state.graphicCardInfo.is_disabled ? "DISABLED" : "ENABLED"}
+                      className={ this.state.graphicCardInfo.is_disabled ? "btn btn-danger nohover" : "btn btn-outline-danger nohover" }
+                      onClick={this.handleDisable}>{this.props.singleGpu.is_disabled ? "DISABLED" : "ENABLED"}
                 </button>
 
               </div>
@@ -108,8 +95,13 @@ class EditGraphicCard extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  singleGpu: state.graphicCards.singleGpu
+})
+
 EditGraphicCard.propTypes = {
-  editGpu: PropTypes.func.isRequired
+  editGpu: PropTypes.func.isRequired,
+  getSingleGpu: PropTypes.func.isRequired
 }
 
-export default connect(null, {editGpu})(EditGraphicCard);
+export default connect(mapStateToProps, { editGpu, getSingleGpu })(EditGraphicCard);

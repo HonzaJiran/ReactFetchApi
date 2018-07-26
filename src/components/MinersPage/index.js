@@ -12,23 +12,11 @@ import PropTypes from 'prop-types'
 class Miners extends Component {
   constructor(props){
     super(props);
-    this.state = {
-      showAll: 'hide'
-    };
-    this.showAll = this.showAll.bind(this);
     this.executeMiner = this.executeMiner.bind(this);
   }
 
-  componentWillMount(){
+  componentDidMount(){
     this.props.fetchMiners()
-  }
-
-  showAll(){
-    if (this.state.showAll === 'hide') {
-      this.setState({ showAll: 'show' })
-    }else {
-      this.setState({ showAll: 'hide' })
-    }
   }
 
   executeMiner(miner){
@@ -62,11 +50,10 @@ class Miners extends Component {
     return (
       <div className="miners-wrapper">
         <h5 className="text-primary text-left">Miners</h5>
-        <div className="row">
-          <button className="btn btn-warning" type="button" onClick={this.showAll}>Show all</button>
+        <div className="row">          
           <AddMiner />
         </div>
-          <MinersList miners={this.props.miners} onClick={this.executeMiner} className={this.state.showAll}/>
+          <MinersList miners={this.props.miners} onClick={this.executeMiner}/>
       </div>
     );
   }

@@ -1,8 +1,9 @@
-import {FETCH_GPUS, EDIT_GPU} from '../actions/types'
+import {FETCH_GPUS, EDIT_GPU, SINGLE_GPU} from '../actions/types'
 
 const initialState = {
   items: [],
-  item: {}
+  item: {},
+  singleGpu: {}
 }
 
 export default function(state = initialState, action) {
@@ -18,6 +19,12 @@ export default function(state = initialState, action) {
         ...state,
         item: action.payload
       };
+
+    case SINGLE_GPU:
+    return{
+      ...state,
+      singleGpu: action.payload
+    }
   
     default:
       return state;
