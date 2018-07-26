@@ -11,6 +11,7 @@ const initialState = {};
 const persistConfig = {
   key: 'root',
   storage,
+  whitelist: ['login'],
 }
 
 const middleware = [thunk]
@@ -23,10 +24,5 @@ export const store = createStore(
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 )
-
-export default {
-  store: store,
-  persistor: persistStore(store),
-}
 
 export const persistor = persistStore(store);

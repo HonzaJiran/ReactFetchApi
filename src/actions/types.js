@@ -22,3 +22,6 @@ export const FETCH_EVENTS ='FETCH_EVENTS'
 
 //Login
 export const AUTH_USER = 'AUTH_USER'
+
+//Logout
+export const LOGOUT_USER = 'LOGOUT_USER'

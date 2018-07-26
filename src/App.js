@@ -14,9 +14,7 @@ class App extends Component {
 
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <ErrorBoundary>
-            <RoutingPage/>
-          </ErrorBoundary>
+          <RoutingPage/>
         </PersistGate>
       </Provider>
     )
