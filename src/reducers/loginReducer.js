@@ -8,7 +8,7 @@ export default function(state = initialState, action) {
       return action.payload;
 
     case LOGOUT_USER:
-      return initialState
+      return initialState;
   
     default:
       return state;

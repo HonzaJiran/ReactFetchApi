@@ -3,105 +3,69 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import { editMiner } from './../../actions/minerActions'
+import { getCurrentMiner } from './../../actions/minerActions'
 
 class EditMiner extends Component {
   constructor(props){
     super(props)
     this.state = {
-      is_disabled: undefined,
-      rb_cable: false,
-      miner_name: '',
-      rb: '',
-      currentMiner: {}
+      is_disabled: this.props.currentMiner.is_disabled,
+      rb_cable: undefined,
+      miner_name: undefined,
+      rb: undefined
     }
-    this.FetchEditMiner = this.FetchEditMiner.bind(this)
     this.handleName = this.handleName.bind(this)
     this.handleRb = this.handleName.bind(this)
     this.handleRbCable = this.handleRbCable.bind(this)
     this.handleDisable = this.handleDisable.bind(this)
     this.postEditedMiner = this.postEditedMiner.bind(this)
+    this.fetchCurrentMiner = this.fetchCurrentMiner.bind(this)
   }
 
-  FetchEditMiner(){
-    fetch(`https://monpick.thinkeasy.cz/api/v1/miner/${this.props.id}/`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'JWT ' + sessionStorage.getItem('jwtToken')
-      }
-    })
-    .then(res => res.json())
-    .then(currentMiner => {
-      this.setState({ currentMiner })
-    })
-
+  fetchCurrentMiner(){
+    this.props.getCurrentMiner(this.props.id)
   }
 
   postEditedMiner(){
     const minerInfo = {
       miner_name: this.state.miner_name,
       rb: this.state.rb,
-      is_disabled: this.state.minerInfo.is_disabled,
-      rb_cable: this.state.minerInfo.rb_cable
+      is_disabled: this.state.is_disabled,
+      rb_cable: this.state.rb_cable
     }
 
     const id = this.props.id;
-
-    this.props.editMiner(minerInfo, id)
+    console.log(minerInfo, id);
+    
+    this.props.editMiner(id,JSON.stringify(minerInfo))
   }
 
   handleName(e) {
-    console.log(e.target.value);
     this.setState({miner_name: e.target.value})
   }
 
   handleRb(e) {
-    console.log(e);
     this.setState({rb: e.target.value})
   }
 
   handleDisable(){
-    this.state.minerInfo.is_disabled
-      ? this.setState(prevState => ({
-        minerInfo: {
-            ...prevState.minerInfo,
-            is_disabled: false
-        }
-        }))
-      : this.setState(prevState => ({
-        minerInfo: {
-            ...prevState.minerInfo,
-            is_disabled: true
-        }
-        }))
+    this.setState({is_disabled: !this.state.is_disabled})
   }
 
   handleRbCable(){
-    this.state.minerInfo.rb_cable
-      ? this.setState(prevState => ({
-        minerInfo: {
-            ...prevState.minerInfo,
-            rb_cable: false
-        }
-        }))
-      : this.setState(prevState => ({
-        minerInfo: {
-            ...prevState.minerInfo,
-            rb_cable: true
-        }
-        }))
+    this.setState({rb_cable: !this.state.rb_cable})
   }
 
 
   render() {
     return (
       <div className="edit-miner">
-        <button onClick={this.FetchEditMiner} type="button" className="btn btn-info" data-toggle="modal" data-target={'#exampleModalLong' + this.props.id}>Edit</button>
+        <button type="button" onClick={this.fetchCurrentMiner} className="btn btn-info" data-toggle="modal" data-target={'#exampleModalLong' + this.props.id}>Edit</button>
         <div className="modal fade" id={'exampleModalLong' + this.props.id} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">{this.state.currentMiner.miner_name}</h5>
+                <h5 className="modal-title" id="exampleModalLabel">{this.props.currentMiner.miner_name}</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -110,21 +74,42 @@ class EditMiner extends Component {
 
                 <div className="form-group">
                   <label htmlFor="exampleInputName">Name</label>
-                  <input name="miner_name" type="text" className="form-control" onChange={this.handleName} value={this.state.miner_name} id="miner_name" placeholder={this.state.currentMiner.miner_name || ''} aria-describedby="nameHelp" />
+                  <input
+                    name="miner_name"
+                    type="text"
+                    className="form-control"
+                    onChange={this.handleName}
+                    value={this.state.miner_name}
+                    id="miner_name"
+                    placeholder={this.props.currentMiner.miner_name || 'null' }
+                    aria-describedby="nameHelp" />
                 </div>
                 <div className="form-group">
                   <label htmlFor="exampleInputName">Rb</label>
-                  <input name="rb" type="text" className="form-control" onChange={this.handleRb} value={this.state.rb || ""} id="rb" placeholder={this.state.currentMiner.rb || ''} aria-describedby="nameHelp"  />
+                  <input
+                  name="rb"
+                  type="text"
+                  className="form-control"
+                  onChange={this.handleRb}
+                  value={this.state.rb || ""}
+                  id="rb"
+                  placeholder={this.props.currentMiner.rb || 'null'}
+                  aria-describedby="nameHelp"
+                  disabled
+                  />
                 </div>
                 <button
-                      className={ this.state.rb_cable ? "btn btn-warning nohover" : "btn btn-outline-warning nohover" }
+                      className="btn btn-warning btn-disabled"
                       id="rb_cable"
-                      onClick={this.handleRbCable}>{this.state.currentMiner.rb_cable ? "CONNECTED" : "DISCONNECTED" || ""}
+                      onClick={this.handleRbCable}
+                      disabled>
+                      {this.state.rb_cable ? "CONNECTED" : "DISCONNECTED" }
                 </button>
            
                 <button
-                      className={ this.state.is_disabled ? "btn btn-outline-danger nohover" : "btn btn-danger nohover" }
-                      onClick={this.handleDisable}>{this.state.currentMiner.is_disabled ? "DISABLED" : "ENABLED" || ""}
+                      className="btn btn-danger"
+                      onClick={this.handleDisable}>
+                      {this.state.is_disabled ? "DISABLED" : "ENABLED" }
                 </button>
                
 
@@ -142,7 +127,13 @@ class EditMiner extends Component {
 }
 
 EditMiner.propTypes = {
-  editMiner: PropTypes.func.isRequired
+  editMiner: PropTypes.func.isRequired,
+  getCurrentMiner: PropTypes.func.isRequired,
+  currentMiner: PropTypes.object.isRequired
 }
 
-export default connect(null, { editMiner })(EditMiner)
+const mapStateToProps = state => ({
+  currentMiner: state.miners.currentMiner
+})
+
+export default connect(mapStateToProps, { editMiner, getCurrentMiner })(EditMiner)

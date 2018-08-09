@@ -9,7 +9,7 @@ class ScanMiners extends Component {
     super(props)
     this.state = {
       ipRange: '',
-      scanName: this.props.currentScannedMinerId
+      scanName: this.props.currentScannedMinerName
     }
     this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
@@ -23,8 +23,8 @@ class ScanMiners extends Component {
     e.preventDefault();
 
     const scanInfo = {
-      name: this.state.scanName,
-      range: this.state.ipRange
+      range: this.state.ipRange,
+      name: this.state.scanName
     }
 
     this.props.scanMiners(scanInfo)
@@ -50,8 +50,12 @@ class ScanMiners extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  scan: state.collectors.scan
+})
+
 ScanMiners.proptypes = {
   scanMiners: Proptypes.func.isRequired
 }
 
-export default connect(null, { scanMiners })(ScanMiners)
+export default connect(mapStateToProps, { scanMiners })(ScanMiners)

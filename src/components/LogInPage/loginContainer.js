@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom'
 import { authUser } from './../../actions/loginActions'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import Alert from './../common/alert'
 
 import LoginForm from './loginForm'
 
@@ -24,27 +25,30 @@ class LoginContainer extends Component {
   onSubmit(e) {
     e.preventDefault()
     this.props.authUser(this.state.usernameInput, this.state.passwordInput);
-
   }
 
   render() {
     if (this.props.login) {
-      return ( <Redirect key="from-login" to={'/miners'} /> )
+      return ( <Redirect key="from-login" to={'/events'} /> )
     }
 
     return (
-      <LoginForm 
-        onChange={this.onChange}
-        usernameInput={this.state.usernameInput}
-        passwordInput={this.state.passwordInput}
-        onSubmit={this.onSubmit}
-      />
+      <React.Fragment>
+       { this.props.authUserFailed && <Alert color="warning" innerText="Bad username or password" /> }
+        <LoginForm 
+          onChange={this.onChange}
+          usernameInput={this.state.usernameInput}
+          passwordInput={this.state.passwordInput}
+          onSubmit={this.onSubmit}
+        />
+      </React.Fragment>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  login: state.login
+  login: state.login,
+  authUserFailed: state.authUserFailed
 })
 
 LoginContainer.propTypes = {

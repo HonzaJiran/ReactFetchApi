@@ -33,42 +33,20 @@ const Collectors = (props) => {
                   <h6 className="text-secondary text-left">Miners:</h6>
                   {
                     props.miners.map(miner => {
-                      if (collector.id === miner.miner.collector.id) {
+                      if (collector.id === miner.collector.id) {
                         return (
                           <div className="tableCell" key={miner.id}>
                             <div id="accordion">
                               <div className="card">
                                 <div className="card-header" id="headingOne">
                                   <h5 className="mb-0">
-                                    <b>{miner.miner.id}</b>
-                                    <p>{miner.miner.miner_name}</p>
-                                    <p>{miner.is_active ? <i className="medium material-icons icon-green">check</i> : <i className="medium material-icons icon-red">close</i>}</p>
-                                    <button className="btn btn-link" data-toggle="collapse" data-target={ "#collapse" + miner.id } aria-expanded="false" aria-controls={ "collapse" + miner.id}>
-                                      <i className="medium material-icons">arrow_downward</i>
-                                    </button>
+                                    <b>{miner.id}</b>
+                                    <p>{miner.miner_name}</p>
+                                    <p>{miner.is_disabled ? <i className="medium material-icons icon-red">close</i> : <i className="medium material-icons icon-green">check</i>}</p>
                                   </h5>
                                 </div>
-
-                                <div id={ "collapse" + miner.id} className="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                                  <div className="card-body">
-                                  <p><b>Miner version: </b>{miner.miner.version}</p>
-                                    {
-                                      miner.miner_performance.map(performance => {
-                                        return(
-                                          <div key={performance.coin.id} className="coin_info">
-                                            <h5 className="text-primary">{performance.coin.shortcut}</h5>
-                                            <p><b>Total hashrate: </b>{performance.total_hashrate} MH/s</p>
-                                            <p><b>Invalid shares: </b>{performance.total_invalid_shares}</p>
-                                            <p><b>Rejected shares: </b>{performance.total_rejected_shares}</p>
-                                            <p><b>Total shares: </b>{performance.total_shares}</p>                                            
-                                          </div>
-                                        );
-                                      })
-                                    }
-                                  </div>
                                 </div>
                               </div>
-                            </div>
                           </div>
                         );
                       }else {

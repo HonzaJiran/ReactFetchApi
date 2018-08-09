@@ -1,10 +1,13 @@
-import {FETCH_MINERS, ADD_MINER, EDIT_MINER, MINER_ACTION} from '../actions/types'
+import {FETCH_MINERS, ADD_MINER, EDIT_MINER, MINER_ACTION, DELETE_MINER, GET_CURRENT_MINER, FETCH_MINER_STATUS } from '../actions/types'
 
 const initialState = {
   items: [],
   item: {},
+  minerStatuses: [],
   edited: {},
-  miner_action: {}
+  miner_action: {},
+  deleted: {},
+  currentMiner: {}
 }
 
 export default function(state = initialState, action) {
@@ -13,6 +16,12 @@ export default function(state = initialState, action) {
       return{
         ...state,
         items: action.payload
+      };
+
+    case FETCH_MINER_STATUS:
+      return{
+        ...state,
+        minerStatuses: action.payload
       };
     
     case ADD_MINER:
@@ -32,6 +41,18 @@ export default function(state = initialState, action) {
         ...state,
         miner_action: action.payload
       }
+
+    case DELETE_MINER:
+      return{
+        ...state,
+        deleted: action.payload
+      };
+
+    case GET_CURRENT_MINER:
+      return{
+        ...state,
+        currentMiner: action.payload
+      };
   
     default:
       return state;

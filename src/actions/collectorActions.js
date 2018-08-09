@@ -12,13 +12,10 @@ export const fetchCollectors = () => dispatch => {
 }
 
 export const addNewMinerToCollector = minerInfo => dispatch => {
-  request(`/miner/add/`,{
-    method: 'POST',
-    body: JSON.stringify(minerInfo)
-  })
+  request(`/miner/add/`, 'POST', JSON.stringify(minerInfo))
   .then(addedMiner => dispatch({
     type: ADD_NEW_MINER,
-    item: addedMiner
+    payload: addedMiner
   }))
   .then(response => {
     Alert.success(`Miner "${response.payload.miner_name}" Added`, {
@@ -37,27 +34,12 @@ export const addNewMinerToCollector = minerInfo => dispatch => {
 }
 
 export const scanMiners = scanInfo => dispatch => {
-  request(`collector/refresh/`,{
-    method: 'POST',
-    body: JSON.stringify(scanInfo)
-  })
+  request(`/collector/refresh/`, 'GET', null, scanInfo)
   .then(scan => dispatch({
     type: SCAN_MINERS,
     payload: scan
   }))
-  .then(scan => {
-    Alert.success(`${scan.payload.detail}`, {
-      position: 'bottom-right',
-      effect: 'slide',
-      timeout: 'none'
-    });
-  })
   .catch(error => {
     console.log(error);
-    Alert.error(`${error}`, {
-      position: 'bottom-right',
-      effect: 'slide',
-      timeout: 'none'
-    });
   })
 }

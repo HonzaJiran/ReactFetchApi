@@ -3,6 +3,9 @@ export const FETCH_MINERS = 'FETCH_MINERS'
 export const ADD_MINER = 'ADD_MINER'
 export const EDIT_MINER = 'EDIT_MINER'
 export const MINER_ACTION = 'MINER_ACTION'
+export const DELETE_MINER = 'DELETE_MINER'
+export const GET_CURRENT_MINER = 'GET_CURRENT_MINER'
+export const FETCH_MINER_STATUS = 'FETCH_MINER_STATUS'
 
 //GPUs
 export const FETCH_GPUS = 'FETCH_GPUS'

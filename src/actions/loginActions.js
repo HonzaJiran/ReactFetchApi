@@ -14,7 +14,7 @@ export const authUser = (userName, userPassword) => dispatch => {
     })
     .then(token => dispatch(authReceived(token.data.token)))
     .catch(error => {
-      console.log(error);
+      console.log(error);      
     })
 }
 

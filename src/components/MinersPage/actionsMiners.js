@@ -16,7 +16,7 @@ class ActionsMiners extends Component {
   makeAction(){
     const actionInfo = {
       miner: this.props.id,
-      miner_action: this.state.miner_action
+      action: this.state.miner_action
     }
 
     console.log(actionInfo);
@@ -33,13 +33,13 @@ class ActionsMiners extends Component {
       <div className="miners-actions">
         <h4 className="text-primary"><b>Actions</b></h4>
         <select value={this.state.miner_action} onChange={this.onChange}>
-          <option value="1">Miner restart</option>
-          <option value="2">Miner reboot</option>
-          <option value="3">Miner start</option>
-          <option value="4">Machine power</option>
-          <option value="5">Machine reeboot</option>
-          <option value="6">stop</option>
-          <option value="7">Machine status</option>
+          <option value="0">Miner restart</option>
+          <option value="1">Miner reboot</option>
+          <option value="2">Miner start</option>
+          <option value="3">Machine power</option>
+          <option value="4">Machine reeboot</option>
+          <option value="5">stop</option>
+          <option value="6">Machine status</option>
         </select>
         <button onClick={this.makeAction.bind(this)} type="button" className="btn btn-success">
           Send action

@@ -1,10 +1,19 @@
-import {FETCH_MINERS, ADD_MINER, EDIT_MINER, MINER_ACTION} from './types'
+import {
+  FETCH_MINERS,
+  ADD_MINER,
+  EDIT_MINER,
+  MINER_ACTION,
+  DELETE_MINER,
+  GET_CURRENT_MINER,
+  FETCH_MINER_STATUS
+} from './types'
+
 import Alert from 'react-s-alert';
 
 import { request } from './../request'
 
 export const fetchMiners = () => dispatch => {
-  request(`/status/miners`)
+  request(`/miner/`)
   .then(miners => dispatch({
     type: FETCH_MINERS,
     payload: miners
@@ -14,16 +23,22 @@ export const fetchMiners = () => dispatch => {
   })
 }
 
+export const fetchMinerStatus = () => dispatch => {
+  request(`/status/miners`)
+  .then(status => dispatch({
+    type: FETCH_MINER_STATUS,
+    payload: status
+  }))
+  .catch(error => console.log(error))
+}
+
 export const addMiner = minerInfo => dispatch => {
-  request(`/status/miners`, {
-    method: 'POST',
-    body: JSON.stringify(minerInfo)
-  })
+  request(`/miner/add/`, 'POST', JSON.stringify(minerInfo))
   .then(miner => dispatch({
     type: ADD_MINER,
     payload: miner
   }))
-  .then( response => {
+  .then(response => {
     Alert.success(`Miner "${response.payload.miner_name}" Added`, {
       position: 'bottom-right',
       effect: 'slide',
@@ -35,15 +50,8 @@ export const addMiner = minerInfo => dispatch => {
   })
 }
 
-export const editMiner = (minerInfo,id) => dispatch => {
-  request(`/miner/${id}/`, {
-    method: 'PATCH',
-    body: JSON.stringify(minerInfo)
-  })
-  .then(miner => dispatch({
-    type: EDIT_MINER,
-    payload: miner
-  }))
+export const editMiner = (id,minerInfo) => dispatch => {
+  request(`/miner/${id}/`, 'PATCH', minerInfo)
   .then(response => {
     Alert.success(`Miner edited.`, {
       position: 'bottom-right',
@@ -51,24 +59,43 @@ export const editMiner = (minerInfo,id) => dispatch => {
       timeout: 'none'
     });
   })
+  .then(miner => dispatch({
+    type: EDIT_MINER,
+    payload: miner
+  }))
 }
 
 export const minerAction = actionInfo => dispatch => {
-  request(`/status/miners`, {
-    body: JSON.stringify(actionInfo)
-  })
-  .then(miner_action => dispatch({
+  request(`/miner/action/`, 'GET', null, actionInfo)
+  .then(minerAction => dispatch({
     type: MINER_ACTION,
-    payload: miner_action
+    payload: minerAction
   }))
   .then(response => {
-    Alert.success(`action ${response} make.`, {
-      position: 'bottom-right',
-      effect: 'slide',
-      timeout: 'none'
-    });
+    if (response.ok) {
+      Alert.success(`Action sended.`, {
+        position: 'bottom-right',
+        effect: 'slide',
+        timeout: 'none'
+      });
+    }else{
+      Alert.warning(`Something went wrong..`, {
+        position: 'bottom-right',
+        effect: 'slide',
+        timeout: 'none'
+      });
+    }
   })
-  .catch(error => {
-    console.log(error);      
-  })
+}
+
+export const getCurrentMiner = id => dispatch => {
+  request(`/miner/${id}/`, 'GET')
+  .then(currentMiner => dispatch({
+    type: GET_CURRENT_MINER,
+    payload: currentMiner
+  }))
+}
+
+export const deleteMiner = id => dispatch => {
+  console.log('delete (DUMP)');
 }

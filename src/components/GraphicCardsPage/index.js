@@ -9,9 +9,8 @@ import PropTypes from 'prop-types'
 class GraphicCards extends Component {
   constructor(props){
     super(props);
-    this.executeGraphicCard = this.executeGraphicCard.bind(this)
   }
-
+/*
   executeGraphicCard(graphicCard){
     if (window.confirm('Do you really want to delete this graphic card?'))
     {
@@ -29,7 +28,7 @@ class GraphicCards extends Component {
       })
     }
   }
-
+*/
   componentDidMount(){
     this.props.fetchGpus()
   }
@@ -40,7 +39,7 @@ class GraphicCards extends Component {
         <br/>
         <button className="btn btn-warning gpu-button float-left" type="button" onClick={this.props.showAll}>Show all</button>
           <div>
-            <GraphicCardsList graphicCards={this.props.graphicCards} executeGraphicCard={this.executeGraphicCard}/>
+            <GraphicCardsList graphicCards={this.props.graphicCards} />
           </div>
       </div>
     );

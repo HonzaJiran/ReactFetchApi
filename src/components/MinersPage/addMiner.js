@@ -12,7 +12,7 @@ class AddMiner extends Component {
       miner_name: '',
       ip_address: '',
       mining_password: '',
-      collector: undefined,
+      collector: 1,
       is_disabled: true
     }
     this.handleClick = this.handleClick.bind(this)
@@ -26,11 +26,13 @@ class AddMiner extends Component {
       : this.setState({ is_disabled: true })
   }
 
-  componentWillMount(){
+  componentDidMount(){
     this.props.fetchCollectors()
   }
 
-  handleAdd(){
+  handleAdd(e){
+    e.preventDefault();
+    
     const minerInfo = {
       miner_name: this.state.miner_name,
       ip_address: this.state.ip_address,
@@ -88,7 +90,8 @@ class AddMiner extends Component {
                     </div>
                     <button
                         className={ this.state.is_disabled ? "btn btn-outline-warning nohover" : "btn btn-warning nohover" }
-                        onClick={this.state.handleClick}>{this.state.is_disabled ? "DISABLED" : "ENABLED"}
+                        onClick={this.state.handleClick}>
+                        {this.state.is_disabled ? "DISABLED" : "ENABLED"}
                     </button>
                   </form>
 

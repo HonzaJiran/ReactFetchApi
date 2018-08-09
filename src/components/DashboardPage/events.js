@@ -1,18 +1,29 @@
 import React from 'react'
+import { ListGroup, ListGroupItem } from 'reactstrap';
+
+const widthStyle = {
+  width: '100%',
+}
+
+const itemStyle = {
+  margin: '2.5px'
+}
 
 const Events = (props) => {
   return (
-    props.events.map(event => {
-      return(
-        <div key={event.date} className="card events-card">
-          <div className="card-body">
-            <h5 className="card-title">{event.date}</h5>
-            <h6 className="card-subtitle mb-2 text-muted">{event.user}</h6>
-            <p className="card-text">{event.description}</p>
-          </div>
-        </div>
-      )
-    })
+    <ListGroup style={widthStyle}>
+      {props.events.map(event => {
+        return(
+          <ListGroupItem style={itemStyle} key={event.date}>
+            <b>Date: </b>{ event.date }
+            <br/>
+            <b>User: </b> <span className="text-primary">{ event.user || 'no user ID.' }</span>
+            <br/>
+            <b>Description: </b><span>{ event.description }</span>
+          </ListGroupItem>
+        )
+      })}
+    </ListGroup>
   )
 }
 

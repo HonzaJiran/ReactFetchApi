@@ -6,6 +6,8 @@ import Collectors from '../components/CollectorsPage'
 import Miners from '../components/MinersPage'
 import GraphicCards from '../components/GraphicCardsPage'
 import Events from '../components/Events'
+import MinerStatus from '../components/statuses/minerStatus'
+import Alert from 'react-s-alert';
 import logo from '../logo.svg'
 
 export default class WrapperPage extends Component {
@@ -18,12 +20,14 @@ export default class WrapperPage extends Component {
         </header>
         <br/>
         <div className="container">
-          <Switch>
+          <Switch>            
             <Route path="/Dashboard" render={(props) => <Dashboard />} />
             <Route path="/Collectors" render={(props) => <Collectors />} />
             <Route path="/Miners" render={(props) => <Miners />} />
             <Route path="/GraphicCards" render={(props) => <GraphicCards />} />
             <Route path="/Events" render={(props) => <Events />} />  
+            <Route path="/MinerStatus" render={(props) => <MinerStatus />} />              
+            <Alert stack={{limit: 3}} />
           </Switch>
         </div>
       </React.Fragment>
